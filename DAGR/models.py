@@ -14,8 +14,8 @@ class DAGR(models.Model):
 	local_path = models.CharField(max_length=200, blank=True)
 
 class Relationship(models.Model):
-	parent_GUID = models.ForeignKey(DAGR, on_delete=models.CASCADE)
-	child_GUID = models.ForeignKey(DAGR, on_delete=models.CASCADE)
+	parent_GUID = models.ForeignKey(DAGR, related_name = 'parent', on_delete=models.CASCADE)
+	child_GUID = models.ForeignKey(DAGR, related_name = 'child', on_delete=models.CASCADE)
 
 class Webpage(models.Model):
 	GUID = models.ForeignKey(DAGR, on_delete=models.CASCADE)
@@ -65,4 +65,3 @@ class Tweet(models.Model):
 	tweet_type = models.CharField(max_length = 2, choices = tweet_types)
 	likes = models.IntegerField()
 	retweets = models.IntegerField()
-	

@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.conf import settings
 import urllib2
 
-from use_twitter.models import Tweet
+from DAGR.models import *
 
 import oauth2
 import json
@@ -43,32 +43,32 @@ def home(request):
                 # we will add every tweet with a picture to our database
                 tweet_id = tweet['id_str']
                 if Tweet.objects.filter(tweet_id=tweet_id).count() == 0:
-                	twitter_handle = handle
-                	retweets = tweet['retweet_count']
-                	likes = tweet['favorite_count']
-                	tweet_type = ""
-                	if tweet['in_reply_to_status_id']:
-                		tweet_type = "R"
-                	elif tweet[retweeted_status]:
-                		tweet_type = "RT"
-                	else:
-                		tweet_type = "T"
-               		ts = datetime.strptime(tweet['created_at'],'%a %b %d %H:%M:%S +0000 %Y')
-		            if 'media' in tweet['entities']:
-		            	# IN HERE GET ALL DIFFERENT MEDIAS AND CREATE DATABASE OBJECTS
-		                media_url = tweet['entities']['media'][0]['media_url']
-		            new_GUID = get_GUID()
-		        	new_DAGR = DAGR.objects.create(
+                    twitter_handle = handle
+                    retweets = tweet['retweet_count']
+                    likes = tweet['favorite_count']
+                    tweet_type = ""
+                    if tweet['in_reply_to_status_id']:
+                        tweet_type = "R"
+                    elif tweet[retweeted_status]:
+                        tweet_type = "RT"
+                    else:
+                        tweet_type = "T"
+                    ts = datetime.strptime(tweet['created_at'],'%a %b %d %H:%M:%S +0000 %Y')
+                    if 'media' in tweet['entities']:
+	                    # IN HERE GET ALL DIFFERENT MEDIAS AND CREATE DATABASE OBJECTS
+	                    media_url = tweet['entities']['media'][0]['media_url']
+                    new_GUID = get_GUID()
+                    DAGR.objects.create(
 		        		GUID = new_GUID,
 		        		size = 0,
 		        		annotated_name = tweet_id,
 		        		creation_date =  datetime.datetime.now()
 	        		)
-	                if Tweet.objects.filter(picture_url=media_url).count() == 0:
+                    if Tweet.objects.filter(picture_url=media_url).count() == 0:
 	                    tweet_list.append(
 	                    	Tweet(
-	                    		twitter_handle=handle,
-		                    	tweet_type = tweet_type
+	                    		twitter_handle= twitter_handle,
+		                    	tweet_type = tweet_type,
 		                        likes = likes,
 		                        posting_date=ts,
 		                        GUID = new_GUID,
@@ -113,14 +113,14 @@ def create_Image(GUID):
 	new_Image = Image.objects.create(
 		GUID= GUID,
 		image_width = 0 , #change to whatever hachoir extracts
-		image_height = 0, 
+		image_height = 0,
 		)
 
 def create_Video(GUID):
 	new_Video = Video.objects.create(
 		GUID= GUID,
 		video_width = 0 , #change to whatever hachoir extracts
-		video_height = 0, 
+		video_height = 0,
 		)
 
 def create_Audio(GUID):
@@ -148,6 +148,6 @@ def create_Word_Document(GUID):
 
 """
 def create_Webpage(GUID):
-	
+
 
 """
