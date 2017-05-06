@@ -1,0 +1,20 @@
+{% extends 'MMDA/base.html'%}
+{% block title %}Result{% endblock %}
+
+{% block body%}
+	{% if all_files %}
+		<h3>Here are files you are looking for</h3>
+		<ul>
+			{% for file in all_files %}
+				<li><a href=" {% url 'MMDA:details' File.GUID %} ">{{ File.file_name }}</a>  
+					<a href="{% url 'MMDA:file-update' File.GUID %}"><span class="glyphicon glyphicon-edit">Update</a>
+					<a href="{% url 'MMDA:file-delete' File.GUID %}"><span class="glyphicon glyphicon-delete">Delete</a>
+
+				</li>
+			{% endfor %}
+		</ul>>
+	{% else %}
+		<h3>Opps....no such file found</h3>
+	{% endif %}
+
+{%endblock%}

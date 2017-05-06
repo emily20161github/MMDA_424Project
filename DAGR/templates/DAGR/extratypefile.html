@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+<!--get all the image name-->
+{% block content %}
+    <h2>Image</h2>
+    <ul>
+        {% for image in object_list %}
+            <li>{{ file.name }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

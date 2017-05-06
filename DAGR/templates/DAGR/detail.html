@@ -1,0 +1,10 @@
+{% extends 'MMDA/base.html'%}
+
+{% block body%}
+	<h2>here is the detail</h2>
+	<ur>
+		{%for field in form %}
+			<li>{{field.value}}</li>
+		<% endfor%>
+	</ul>
+{% endblock %}
