@@ -1,0 +1,22 @@
+{% block html_head %}
+{% endblock %}
+
+{% block html_body %}
+<h1>
+Welcome to my Twitter PhotoGallery App
+</h1>
+{% if success %}
+	<h2> {{success}} </h2>
+{% endif %}
+<form method="POST"> {% csrf_token %}
+	Twitter Handle: <br>
+	<input type="text" name="handle"> <br>
+	Add Photos from X Tweets (max 20):
+	<input type="number" name="quantity" min="1" max="20" value="1"><br>
+	<input type="submit" value="Submit" method="post">
+</form>
+<a href="{% url 'gallery' %}" style="text-decoration:none">
+<button>View Gallery</button>
+</a> 
+
+{% endblock %}

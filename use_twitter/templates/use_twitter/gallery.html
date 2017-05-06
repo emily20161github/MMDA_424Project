@@ -1,0 +1,17 @@
+
+{% load static %}
+
+{% block html_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'use_twitter/gallery.css' %}" />
+{% endblock %}
+
+{% block html_body %}
+<h1> My Twitter Photo Gallery </h1>
+
+    {% for tweet in tweets %}
+        <div class="gallery">
+        <img src="{{ tweet.picture_url }}" style="width:304px;height:228px;">
+        <div class="desc"> @{{ tweet.twitter_handle }} </br> {{tweet.posting_date}} </div>
+        </div>
+    {% endfor %}
+{% endblock %}

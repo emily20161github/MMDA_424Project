@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = [u'ericyang24.pythonanywhere.com']
 
+CONSUMER_KEY = '37mmtGyeM5lolI1UGqqB2LZDu'
+CONSUMER_SECRET = 'xnXsPlG48KrrqxBcuAsvgdiu04kbIGLVcurkzQSEyhAx8gf4NF'
+ACCESS_TOKEN = '3240211217-S4gGH3Ha8jc7uRSVnJGFCoSVma3qRiRNAzPQdPE'
+ACCESS_SECRET = 'mBogcSsmds3IIvKVl3uL0BzueM0dOSaolBUsjQOUFbE6L'
 
 # Application definition
 
@@ -37,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # OUR APPS
     'DAGR',
+    'use_twitter',
 ]
 
 MIDDLEWARE = [
