@@ -7,9 +7,9 @@ from django.db import models
 class DAGR(models.Model):
 	GUID = models.CharField(pk=True)
 	size = models.BigIntegerField(blank=True) # blank=true for tweets and websites
-	file_name = models.CharField(max_length=200)
+	file_name = models.CharField(max_length=200, blank=True)
 	annotated_name = models.CharField(max_length=200)
-	SHA1 = models.CharField(max_length=200)
+	SHA1 = models.CharField(max_length=200. blank=True)
 	creation_date = models.DateTimeField()
 	local_path = models.CharField(max_length=200, blank=True)
 
@@ -59,6 +59,8 @@ class Tweet(models.Model):
 		('R', 'Reply'),
 		('RT', 'Retweet')
 	)
+	GUID = models.ForeignKey(DAGR, on_delete=models.CASCADE)
+	tweet_id = models.CharField(max_length=200)
 	twitter_handle = models.CharField(max_length=16)
 	tweet_type = models.CharField(max_length = 2, choices = tweet_types)
 	likes = models.IntegerField()
