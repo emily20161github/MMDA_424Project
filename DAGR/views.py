@@ -15,6 +15,7 @@ ACCESS_TOKEN = settings.ACCESS_TOKEN
 ACCESS_SECRET = settings.ACCESS_SECRET
 # Create your views here.
 
+
 def home(request):
 
     # If the form was submitted

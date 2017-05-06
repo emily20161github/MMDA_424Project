@@ -5,11 +5,11 @@ from django.db import models
 # Create your models here.
 
 class DAGR(models.Model):
-	GUID = models.CharField(pk=True)
+	GUID = models.CharField(max_length = 200, primary_key=True)
 	size = models.BigIntegerField(blank=True) # blank=true for tweets and websites
 	file_name = models.CharField(max_length=200, blank=True)
 	annotated_name = models.CharField(max_length=200)
-	SHA1 = models.CharField(max_length=200. blank=True)
+	SHA1 = models.CharField(max_length=200, blank=True)
 	creation_date = models.DateTimeField()
 	local_path = models.CharField(max_length=200, blank=True)
 
