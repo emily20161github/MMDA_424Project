@@ -1,16 +1,12 @@
-{% extends 'MMDA/base.html'%}
-{% block title %}Add a New file{% endblock %}
+{% extends 'DAGR/base.html'%}
 
-
-{% block body %}
-<body>
+{% block content %}
   
-  
+  	<div id="title"> Add New File </div>
   	<div class="fileupload fileupload-new" data-provides="fileupload">
     	<span class="btn btn-primary btn-file"><span class="fileupload-new">Select file</span>
     	<span class="fileupload-exists">Change</span>         <input type="file" /></span>
     	<span class="fileupload-preview"></span>
-    	<a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
+    	<a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">x</a>
   	</div> 
-</body>
-{% endbody %}
+{% endblock %}

@@ -25,7 +25,9 @@ SECRET_KEY = 'n-0y-pxl5xon#iiy#ipb$20vy715%9(l@7bsfwb5ys)tu^icxu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [u'ericyang24.pythonanywhere.com']
+ALLOWED_HOSTS = [u'ericyang24.pythonanywhere.com',u'127.0.0.1'
+
+]
 
 CONSUMER_KEY = '37mmtGyeM5lolI1UGqqB2LZDu'
 CONSUMER_SECRET = 'xnXsPlG48KrrqxBcuAsvgdiu04kbIGLVcurkzQSEyhAx8gf4NF'
@@ -82,18 +84,25 @@ WSGI_APPLICATION = 'MMDA.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ericyang24$MMDA',
-        'USER': 'ericyang24',
-        'PASSWORD': 'brim725tow418',
-        'HOST': 'ericyang24.mysql.pythonanywhere-services.com',
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase',
     }
+    
 }
 
 
+"""
+'testing': {
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': 'ericyang24$MMDA',
+    'USER': 'ericyang24',
+    'PASSWORD': 'brim725tow418',
+    'HOST': 'ericyang24.mysql.pythonanywhere-services.com',
+    'OPTIONS': {
+        'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+    },
+}
+"""
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 

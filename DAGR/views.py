@@ -15,6 +15,9 @@ ACCESS_TOKEN = settings.ACCESS_TOKEN
 ACCESS_SECRET = settings.ACCESS_SECRET
 # Create your views here.
 
+def test(request):
+    context = {}
+    return render(request, 'DAGR/addfile.html', context)
 
 def home(request):
 
