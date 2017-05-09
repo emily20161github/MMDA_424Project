@@ -17,7 +17,7 @@ ACCESS_SECRET = settings.ACCESS_SECRET
 
 def test(request):
     context = {}
-    return render(request, 'DAGR/addfile.html', context)
+    return render(request, 'DAGR/Time_Report.html', context)
 
 def home(request):
 
