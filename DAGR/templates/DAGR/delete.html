@@ -1,10 +1,128 @@
-{% extends 'MMDA/base.html'%}
-{% block title %}delete a weboage{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{%block title %}DAGR<{% endblock %}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
 
-{%block body%}
-<form action="" method="post">
-  {% csrf_token %}
-  <p>Are you sure you want to delete "{{ object }}"?</p>
-  <input type="submit" value="Confirm" />
-</form>
-{%endbody%}
+
+</head>
+<body>
+
+<!--brand-->
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>                        
+          </button>
+          <a class="navbar-brand" href="{% url 'MMDA:index'%}">DAGR</a>
+      </div>
+
+<!--header -->
+    <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+           <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Add Document <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="{%MMDA:file-add %}"><span class="glyphicon glyphicon-file">Add File</a></li>
+                 <li><a href="{%MMDA:Web-add %}"><span class="glyphicon glyphicon-print">Add Wepage</a></li>
+              </ul>
+          </li>
+
+          <li><a href="#">Category</a></li>
+
+        <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-print">Report <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-print"></span>Orphan Report</a></li>
+                <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-open-file"></span>Sterile Report</a></li>
+                <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-open-file"></span>Time Report</a></li>
+              </ul>
+          </li>
+    </ul>
+
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Delete</button>
+
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          Are you sure?
+        </div>
+        <div class="modal-footer">
+          <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
+          <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModa">Update</button>
+
+  <div id="myModa" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row">
+              <div class="col-md-12">
+                <div class="panel panel-default">
+                  <div class="panel-body">                 
+                    <lable><b>Please select file that you want to replace the original file in database</b></lable>
+                    <br>
+                    <br>
+                    <form method="post" enctype="multipart/form-data">
+                      <input type="file" id="files" name="files" multiple="multiple" />
+                    </form>
+                  </div>
+                </div>        
+              </div>  
+            </div>
+        </div>
+         <div class="modal-footer">
+          <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Submit</button>
+          <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<!--<script type="text/javascript">
+  $(document).ready(function(){
+    $('.modal').modal('show');
+});
+</script>
+
+<script type="text/javascript">
+  $('button[name="remove_levels"]').on('click', function(e) {
+  var $form = $(this).closest('form');
+  e.preventDefault();
+  $('#confirm').modal({
+      backdrop: 'static',
+      keyboard: false
+    })
+  .one('click', '#delete', function(e) {
+      $form.trigger('submit');
+    });
+});
+</script>-->
+
+
+
+</body>
+</html>
+
+

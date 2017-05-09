@@ -1,41 +1,140 @@
-{% extends 'MMDA/base.html'%}
-{% block title %}Add a weboage{% endblock %}
+<!--{% extends 'MMDA/base.html'%}
+{% block title %}Add a weboage{% endblock %}-->
 
 <!--using jquery to achieve the popup add -->
-{% block body%} <!-- Trigger the modal with a button -->
-<div class="container">
-  <!-- Trigger the modal with a button -->
-  	<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Webpage</button>
+<!--{% block body%}--><!-- Trigger the modal with a button -->
 
-  <!-- Modal -->
-  	<div class="modal fade" id="myModal" role="dialog">
-    	<div class="modal-dialog">
-    
-      <!-- Modal content-->
-      		<div class="modal-content">
-        		<div class="modal-header">
-          			<button type="button" class="close" data-dismiss="modal">&times;</button>
-         			<h4 class="modal-title">Add webpage</h4>
-        		</div>
 
-        	<div class="modal-body">
-        		<div class="form-group">
-		    		<input type="text" class="form-control" name="q" value="" placeholder="Enter Webpage ">
-		    		<button type="submit" class="btn btn-success">Submit</button>
-				</div>>
-       		</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{%block title %}DAGR<{% endblock %}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
 
-        	<div class="modal-footer">
-          		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        	</div>
+
+
+
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>                        
+          </button>
+          <a class="navbar-brand" href="{% url 'MMDA:index'%}">DAGR</a>
       </div>
-      
+
+<!--header -->
+    <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+           <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Add Document <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="{%MMDA:file-add %}"><span class="glyphicon glyphicon-file">Add File</a></li>
+                 <li><a href="{%MMDA:Web-add %}"><span class="glyphicon glyphicon-print">Add Wepage</a></li>
+              </ul>
+          </li>
+
+          <li><a href="#">Category</a></li>
+
+        <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-print">Report <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-print"></span>Orphan Report</a></li>
+                <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-open-file"></span>Sterile Report</a></li>
+                <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-open-file"></span>Time Report</a></li>
+              </ul>
+          </li>
+    </ul>
+
     </div>
   </div>
-  
+</nav>
+
+
+
+
+
+
+
+
+
+<!--main part-->
+
+<div class="container">
+  <div class="row">
+    <input type="hidden" name="count" value="1" />
+        <div class="control-group" id="fields">
+            <h2>Add webiste into database</h2>
+            <div class="controls" id="profs"> 
+                <form class="input-append">
+                    <div id="field"><input autocomplete="off" class="input" id="field1" name="prof1" type="text" placeholder="Type something" data-items="8"/><button id="b1" class="btn add-more" type="button">+</button></div>
+                </form>
+            <br>
+            <small>(Press + to add another website)</small>
+            <p style="text-align: right; margin-top: 10px;">
+                  <input type="submit" value="Submit" class="btn btn-lg btn-primary btn-sm" />
+                  <input type="submit" value="Cancel" class="btn btn-lg btn-primary btn-sm" />
+            </p>
+            </div>
+        </div>
+  </div>
 </div>
 
 
+<script type="text/javascript">
+  $(document).ready(function(){
+    var next = 1;
+    $(".add-more").click(function(e){
+        e.preventDefault();
+        var addto = "#field" + next;
+        var addRemove = "#field" + (next);
+        next = next + 1;
+        var newIn = '<input autocomplete="off" class="input form-control" id="field' + next + '" name="field' + next + '" type="text">';
+        var newInput = $(newIn);
+        var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
+        var removeButton = $(removeBtn);
+        $(addto).after(newInput);
+        $(addRemove).after(removeButton);
+        $("#field" + next).attr('data-source',$(addto).attr('data-source'));
+        $("#count").val(next);  
+        
+            $('.remove-me').click(function(e){
+                e.preventDefault();
+                var fieldNum = this.id.charAt(this.id.length-1);
+                var fieldID = "#field" + fieldNum;
+                $(this).remove();
+                $(fieldID).remove();
+            });
+    });
+    
 
-{%endblock%}
+    
+});
+
+
+
+
+</script>
+<style type="text/css">
+  * {
+    .border-radius(0) !important;
+  }
+
+  #field {
+    margin-bottom:10px;
+}
+</style>
+
+</body>
+</html>
+
 

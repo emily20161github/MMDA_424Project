@@ -1,10 +1,80 @@
-{% extends 'MMDA/base.html'%}
+!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{%block title %}DAGR<{% endblock %}</title>
+    {% load staticfiles %} 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script><meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Ranga:400,700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'image/style.css' %}" />
 
-{% block body%}
-	<h2>here is the detail</h2>
-	<ur>
-		{%for field in form %}
-			<li>{{field.value}}</li>
-		<% endfor%>
-	</ul>
-{% endblock %}
+
+</head>
+<body>
+
+<!--brand-->
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>                        
+            </button>
+            <a class="navbar-brand" href="{% url 'MMDA:index'%}">DAGR</a>
+        </div>
+
+<!--header -->
+    <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+             <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Add Document <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{%MMDA:file-add %}"><span class="glyphicon glyphicon-file">Add File</a></li>
+                     <li><a href="{%MMDA:Web-add %}"><span class="glyphicon glyphicon-print">Add Wepage</a></li>
+                </ul>
+            </li>
+
+            <li><a href="#">Category</a></li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-print">Report <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-print"></span>Orphan Report</a></li>
+                    <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-open-file"></span>Sterile Report</a></li>
+                    <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-open-file"></span>Time Report</a></li>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+
+<!--main part-->
+
+
+
+
+  <div class="container">
+  <label><b>the detail of this file has been listed below</b></label>
+    <ul class="list-group">
+      {% for item in mylist %}
+     <li class="list-group-item">{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+</body>
+</html>
+
+
