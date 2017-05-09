@@ -1,0 +1,38 @@
+* {
+  .border-radius(0) !important;
+}
+
+#field {
+    margin-bottom:20px;
+}
+
+
+#panel2
+{
+     height: 200px;
+     width: 200px;
+     background: #E88C37;
+     float: left;
+     display: hidden;
+     font-size: xx-large;
+}
+
+#panel3
+{
+     height: 200px;
+     width: 200px;
+     background: #E88C37;
+     float: left;
+     display: hidden;
+     font-size: xx-large;
+}
+
+#panel4
+{
+     height: 200px;
+     width: 200px;
+     background: #E88C37;
+     float: left;
+     display: hidden;
+     font-size: xx-large;
+}

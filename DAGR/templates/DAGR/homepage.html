@@ -1,48 +1,186 @@
-{% extends 'MMDA/base.html'%}
-{% block title %}Homepage{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{%block title %}DAGR<{% endblock %}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
+
+
+</head>
+<body>
+
+<!--brand-->
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>                        
+          </button>
+          <a class="navbar-brand" href="{% url 'MMDA:index'%}">DAGR</a>
+      </div>
+
+<!--header -->
+    <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+           <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">Add Document <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="{%MMDA:file-add %}"><span class="glyphicon glyphicon-file">Add File</a></li>
+                 <li><a href="{%MMDA:Web-add %}"><span class="glyphicon glyphicon-print">Add Wepage</a></li>
+              </ul>
+          </li>
+
+          <li><a href="#">Category</a></li>
+
+        <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-print">Report <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-print"></span>Orphan and Sterile Report</a></li>
+                <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-open-file"></span> Reach Report</a></li>
+                <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-open-file"></span>Time-Range Report</a></li>
+              </ul>
+          </li>
+    </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+
+<!--main part-->
+
+  <div class="container">
+  	<h3>Search for the DAGR you want</h3>
+		  <div class="form-group">
+		      <input type="text" class="form-control" name="q" value="" placeholder="Search the result ">
+		  </div>
+
+		  <div class="form-group">
+  			 <select class="form-control" id="sel1">
+            <option value="">select one method</option>
+   				 <option> by keyword</option>
+    			 <option> by name</option>
+   				 <option> by date</option>
+    			 <option> by size</option>
+    			 <option> by file type</option>
+  			 </select>
+		  </div>
+    <p style="text-align: right; margin-top: 20px;">
+      <button type="submit" class="btn btn-primary" id="search">Search</button>
+      <button type="submit" class="btn btn-primary" id="cancel">Cancel</button>
+    </p>
+  </div>
+
+    <!--this line can be eliminated-->
+ 
+  <div class="container">
+    <div class="panel panel-default" id="panel3">
+      <div class="panel-body">
+        <label><b>These are files you are looking for</b></label>
+        <br>
+        <br>
+
+        <ul>
+          {% for file in all_files %}
+          <table class="table">
+            <thead class="thead-default">
+              <tr>
+                <th>File Name</th>
+                <th>Operation</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row"><a href=" {% url 'MMDA:details' File.GUID %} ">{{ File.file_name }}</a>
+                </th>
+                <td>
+
+                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Delete</button>
+                    <div id="myModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-body">
+                              Are you sure?
+                              </div>
+                              <div class="modal-footer">
+                                  <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
+                                  <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+                              </div>
+                          </div>
+                        </div>
+                </div>
+                 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModa">Update</button>
+
+                    <div id="myModa" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-body">
+                                  <div class="row">
+                                    <div class="panel panel-default">
+                                      <div class="panel-body">                 
+                                        <lable><b>Please select file that you want to replace the original file in database</b></lable>
+                                        <br>
+                                        <br>
+                                        <form method="post" enctype="multipart/form-data">
+                                          <input type="file" id="files" name="files" multiple="multiple" />
+                                        </form>
+                                        <div class="form-group">
+                                        <br>
+                                          <label for="usr">Or</label>
+                                          <br>
+                                          <label for="usr"> input the website</label>
+                                          <input type="text" class="form-control" id="usr">
+                                        </div>
+                                      </div>
+                                    </div>        
+                                  </div>  
+                                </div>
+                            </div>
+                             <div class="modal-footer">
+                              <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Submit</button>
+                              <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+
+
 <script type="text/javascript">
-function showCustomer(str) {
-  var xhttp;    
-  if (str == "") {
-    document.getElementById("txtHint").innerHTML = "";
-    return;
-  }
-  xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("txtHint").innerHTML = this.responseText;
-    }
-  };
-  xhttp.open("GET", "getcustomer.asp?q="+str, true);
-  xhttp.send();
-}
+
+$('#search').click(function()
+{   
+    $("#panel3").toggle();     
+});
+
 </script>
 
 
-<div class="container">
-  	<h3>Search for the thing you want</h3>
-  	<form >
-		<div class="form-group">
-		    <input type="text" class="form-control" name="q" value="" placeholder="Enter ">
-		</div>>
 
+      </p>
+	  </form>
+  </div>
 
-		<div class="form-group">
-  			<label for="Search">Seach search type(Select one)</label>
-  			<select class="form-control" id="sel1">
-          <option value="">Select a search method</option>
-   				<option value="">keyword</option>
-    			<option> by name</option>
-   				<option> by date</option>
-    			<option> by size</option>
-    			<option> by file type</option>
-  			</select>
-		</div>
-    <!--this line can be eliminated-->
-		<button type="submit" class="btn btn-default" id="search">Search</button>
-	</form>
-
-</div>
-
+</body>
+</html>
 
 

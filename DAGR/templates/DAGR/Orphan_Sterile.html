@@ -1,85 +1,165 @@
-{% extends 'MMDA/base.html'%}
-{% block title %}Orphan Report{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{%block title %}DAGR<{% endblock %}</title>
+    {% load staticfiles %} 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script><meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Ranga:400,700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'image/style.css' %}" />
 
-{% block body %}
-<div class="container-fluid songs-container">
 
-    <div class="row">
+</head>
+<body>
 
-        <!-- Left Album Info -->
-        <div class="col-sm-4 col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h1><b>Orphan Report</b>></h1>
-                    <h2>all the DAGR which has no parent</h2>
-                </div>
-            </div>
+<!--brand-->
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>                        
+            </button>
+            <a class="navbar-brand" href="{% url 'MMDA:index'%}">DAGR</a>
         </div>
 
-        <!-- Right Song Info -->
-        <div class="col-sm-8 col-md-9">
+<!--header -->
+    <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+             <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Add Document <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{%MMDA:file-add %}"><span class="glyphicon glyphicon-file">Add File</a></li>
+                     <li><a href="{%MMDA:Web-add %}"><span class="glyphicon glyphicon-print">Add Wepage</a></li>
+                </ul>
+            </li>
 
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    {% if error_message %}
-                        <p><strong>{{ error_message }}</strong></p>
-                    {% endif %}
+            <li><a href="#">Category</a></li>
 
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>GUID</th>
-                            <th>File_name</th>
-                            <th>Annotated_Name</th>
-                            <th>File_Type</th>
-                            <th>File_Size</th>
-                            <th>Local Path</th>
-                            <th>Keyword</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!--after get a set o forpahn set-->
-                        {% for file in file.orphan_set.all %}
-                            <tr>
-                                <td>
-                                	<ul>
-                                		<li><a href=" {% url 'MMDA:details' File.GUID %} ">{{ File.GUID }}</a>  
-											<a href="{% url 'MMDA:file-update' File.GUID %}"><span class="glyphicon glyphicon-edit">Update</a>
-											<a href="{% url 'MMDA:file-delete' File.GUID %}"><span class="glyphicon glyphicon-delete">Delete</a>
-										</li>
-									</ul>
-                                </td>
-                                <td>
-                                    {{file.file_name}}
-                                </td>
-                                <td>
-                                    {{file.annotated_Name}}
-                                </td>
-                                 <td>
-                                    {{file.file_Type}}
-                                </td> 
-                                <td>
-                                    {{file.file_size}}
-                                </td>
- 								<td>
-                                    {{file.local_path}}
-                                </td>
-                                 <td>
-                                    {{file.keyword}}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
-
-        </div>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-print">Report <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-print"></span>Orphan Report</a></li>
+                    <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-open-file"></span>Sterile Report</a></li>
+                    <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-open-file"></span>Time Report</a></li>
+                </ul>
+            </li>
+        </ul>
 
     </div>
+  </div>
+</nav>
 
-</div>
 
-{% endblock %}
+
+<!--##########################################Main part###########################################################-->
+
+
+
+
+
+
+    <div class="container">
+            <h1>Orphan and Sterile Report</h1>
+            <br>
+
+             <label><b> files that have no parent and children in database</b></label>
+                <br>    
+        <div class="panel panel-default" id="panel5">
+            <div class="panel-body">
+                    
+                    <table class="table">
+                      <thead class="thead-default">
+                        <tr>
+                          <th>File Name</th>
+                          <th>File GUID</th>
+                          <th>File Type</th>
+                          <th>Local Path</th>
+                          <th>annotated_name</th>
+                          <th>Operation</th>
+                        </tr>
+                 
+                      </thead>
+
+                      <tbody>
+                       {% for file in all_files %}
+                        <tr>
+                          <th scope="row"><a href=" {% url 'MMDA:details' File.GUID %} ">{{ File.file_name }}</a>
+                          </th>
+                          <td>file.GUID</td>
+                          <td>file.type</td>
+                          <td>file.localpath</td>
+                          <td>file.annotated_name</td>
+                          <td>
+
+                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Delete</button>
+                        <div id="myModal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                      Are you sure?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
+                                            <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModa">Update</button>
+
+                    <div id="myModa" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-body">
+                                  <div class="row">
+                                    <div class="panel panel-default">
+                                      <div class="panel-body">                 
+                                        <lable><b>Please select file that you want to replace the original file in database</b></lable>
+                                        <br>
+                                        <br>
+                                        <form method="post" enctype="multipart/form-data">
+                                          <input type="file" id="files" name="files" multiple="multiple" />
+                                        </form>
+                                        <div class="form-group">
+                                        <br>
+                                          <label for="usr">Or</label>
+                                          <br>
+                                          <label for="usr"> input the website</label>
+                                          <input type="text" class="form-control" id="usr">
+                                        </div>
+                                      </div>
+                                    </div>        
+                                  </div>  
+                                </div>
+                            </div>
+                             <div class="modal-footer">
+                              <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Submit</button>
+                              <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                        </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+
+                      </table>
+
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
+
 

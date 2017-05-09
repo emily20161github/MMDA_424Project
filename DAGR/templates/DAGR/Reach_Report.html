@@ -1,30 +1,184 @@
-{% extends 'MMDA/base.html'%}
-{% block title %}Reach Report{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>{%block title %}DAGR<{% endblock %}</title>
+	{% load staticfiles %} 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script><meta charset="UTF-8">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans|Ranga:400,700" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{% static 'DAGR/style.css' %}" />
 
 
-{% block body %}
-<div class="container-fluid">
-	<div class=""col-md-8">
-		<h3>Search for the one you want to generate Reach Report</h3>
-		<form >
-		<div class="form-group">
-		    <input type="text" class="form-control" name="q" value="" placeholder="Enter ">
-		</div>   
-		<button type="submit" class="btn btn-default" id="search">Search</button>
+</head>
+<body>
+
+<!--brand-->
+<nav class="navbar navbar-inverse">
+  	<div class="container-fluid">
+    	<div class="navbar-header">
+      		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        		<span class="icon-bar"></span>
+        		<span class="icon-bar"></span>
+        		<span class="icon-bar"></span>                        
+      		</button>
+      		<a class="navbar-brand" href="{% url 'MMDA:index'%}">DAGR</a>
+    	</div>
+
+<!--header -->
+    <div class="collapse navbar-collapse" id="myNavbar">
+      	<ul class="nav navbar-nav">
+       		 <li class="dropdown">
+            	<a class="dropdown-toggle" data-toggle="dropdown" href="#">Add Document <span class="caret"></span></a>
+          		<ul class="dropdown-menu">
+            		<li><a href="{%MMDA:file-add %}"><span class="glyphicon glyphicon-file">Add File</a></li>
+           			 <li><a href="{%MMDA:Web-add %}"><span class="glyphicon glyphicon-print">Add Wepage</a></li>
+          		</ul>
+        	</li>
+
+        	<li><a href="#">Category</a></li>
+
+     		<li class="dropdown">
+           		<a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-print">Report <span class="caret"></span></a>
+          		<ul class="dropdown-menu">
+           			<li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-print"></span>Orphan Report</a></li>
+            		<li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-print"></span>Sterile Report</a></li>
+            		<li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-print"></span>Time Report</a></li>
+          		</ul>
+        	</li>
+		</ul>
 
     </div>
-</div>
+  </div>
+</nav>
 
-{% endblock %}
 
+
+
+
+<!--##########################################main part###########################################################-->
+
+
+  	<div class="container">
+  		<h3>Please input the DAGR that you want to get reach report from</h3>
+  		<form >
+			<div class="form-group">
+				<input type="text" class="form-control" name="q" value="" placeholder="Search the result ">
+			</div>
+			    <!--this line can be eliminated-->
+			    <p style="text-align: right; margin-top: 20px;">
+					<button type="submit" class="btn btn-primary" id="Search">Search</button>
+			       	<button type="submit" class="btn btn-primary" id="cancel">Cancel</button>
+			    </p>
+		</form>
+	</div>
+
+	<div class="container">
+			
+		<div class="panel panel-default" id="panel4">
+            <div class="panel-body">
+             	<label><b>Here are files you are looking for</b></label>
+             	<br>	
+					
+					<table class="table">
+					  <thead class="thead-default">
+					    <tr>
+					      <th>File Name</th>
+					      <th>File GUID</th>
+					      <th>File Type</th>
+					      <th>Parent DAGR</th>
+					      <th>children DAGR</th>
+					      <th>Operation</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					  {% for file in all_files %}
+					    <tr>
+					      <th scope="row"><a href=" {% url 'MMDA:details' File.GUID %} ">{{ File.file_name }}</a>
+					      </th>
+					      <td>file.GUID</td>
+					      <td>file.Type</td>
+					      <td>file.parent</td>
+					      <td>file.children</td>
+					      <td>
+
+		              	<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Delete</button>
+		              	<div id="myModal" class="modal fade" role="dialog">
+			                	<div class="modal-dialog">
+			                  		<div class="modal-content">
+				                    	<div class="modal-body">
+				                      Are you sure?
+				                    	</div>
+				                    	<div class="modal-footer">
+				                      		<button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
+				                      		<button type="button" data-dismiss="modal" class="btn">Cancel</button>
+				                    	</div>
+				                	</div>
+				                </div>
+				        </div>
+				        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModa">Update</button>
+
+                    <div id="myModa" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-body">
+                                  <div class="row">
+                                    <div class="panel panel-default">
+                                      <div class="panel-body">                 
+                                        <lable><b>Please select file that you want to replace the original file in database</b></lable>
+                                        <br>
+                                        <br>
+                                        <form method="post" enctype="multipart/form-data">
+                                          <input type="file" id="files" name="files" multiple="multiple" />
+                                        </form>
+                                        <div class="form-group">
+                                        <br>
+                                          <label for="usr">Or</label>
+                                          <br>
+                                          <label for="usr"> input the website</label>
+                                          <input type="text" class="form-control" id="usr">
+                                        </div>
+                                      </div>
+                                    </div>        
+                                  </div>  
+                                </div>
+                            </div>
+                             <div class="modal-footer">
+                              <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Submit</button>
+                              <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+		             	</td>
+					    </tr>
+					  </tbody>
+					  {% endfor %}
+					</table>
+				</div>
+			</div>
+
+      	</div>
+    </div>
+
+    
 
 <script type="text/javascript">
-	
 
-
-
-
-
-
+$('#Search').click(function()
+{   
+    $("#panel4").toggle();     
+});
 
 </script>
+
+
+
+
+</body>
+</html>
+
+
