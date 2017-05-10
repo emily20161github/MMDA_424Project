@@ -9,9 +9,9 @@ class DAGR(models.Model):
 	size = models.BigIntegerField(blank=True) # blank=true for tweets and websites
 	file_name = models.CharField(max_length=200, blank=True)
 	annotated_name = models.CharField(max_length=200)
-	SHA1 = models.CharField(max_length=200, blank=True)
 	creation_date = models.DateTimeField()
 	local_path = models.CharField(max_length=200, blank=True)
+	datatype = models.CharField(max_length=200, blank=True)
 
 class Relationship(models.Model):
 	parent_GUID = models.ForeignKey(DAGR, related_name = 'parent', on_delete=models.CASCADE)
@@ -24,11 +24,11 @@ class Webpage(models.Model):
 
 class Word_Document(models.Model):
 	GUID = models.ForeignKey(DAGR, on_delete=models.CASCADE)
-	page_count = models.IntegerField()
+	char_count = models.IntegerField()
 	word_count = models.IntegerField()
-	paragraph_count = models.IntegerField()
 	author = models.CharField(max_length=200)
-	date_modified = models.DateTimeField()
+	date_created = models.CharField(max_length=200)
+	date_modified = models.CharField(max_length=200)
 
 class Keyword(models.Model):
 	GUID = models.ForeignKey(DAGR, on_delete=models.CASCADE)
@@ -42,14 +42,15 @@ class Image(models.Model):
 class Audio(models.Model):
 	GUID = models.ForeignKey(DAGR, on_delete=models.CASCADE)
 	title = models.CharField(max_length=200, null=True)
-	artist = models.CharField(max_length=200, null=True)
-	year = models.IntegerField(null=True)
+	genre = models.CharField(max_length=200, null=True)
 	composer = models.CharField(max_length=200, null=True)
 	track = models.IntegerField(null=True)
 	album = models.CharField(max_length=200, null=True)
+	duration = models.CharField(max_length=200)
 
 class Video(models.Model):
 	GUID = models.ForeignKey(DAGR, on_delete=models.CASCADE)
+	duration = models.CharField(max_length=200)
 	video_width = models.IntegerField()
 	video_height = models.IntegerField()
 

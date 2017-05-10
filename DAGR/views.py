@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
 import urllib2
 
 from DAGR.models import *
@@ -15,6 +16,82 @@ CONSUMER_SECRET = settings.CONSUMER_SECRET
 ACCESS_TOKEN = settings.ACCESS_TOKEN
 ACCESS_SECRET = settings.ACCESS_SECRET
 # Create your views here.
+
+@csrf_exempt
+def meta(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        for meta in data['data']:
+            guid = get_GUID()
+            file_name = meta['file_name']
+            path = meta['localpath']
+            a_name = meta['a_name']
+            table = meta['table']
+            size = meta['size']
+            creation_date = datetime.now()
+
+            dagr = DAGR.objects.create(
+                GUID = guid,
+                size = size,
+                annotated_name = a_name,
+                creation_date =  creation_date,
+                file_name = file_name,
+                local_path = path,
+                datatype = meta['type']
+            )
+            if table == 'img':
+                Image.objects.create(
+                    GUID = dagr,
+                    image_width = meta['width'],
+                    image_height = meta['height']
+                )
+            elif table == 'vid':
+                Video.objects.create(
+                    GUID = dagr,
+                    video_width = meta['width'],
+                    video_height = meta['height'],
+                    duration = meta['duration']
+                )
+            elif table == 'audio':
+                if 'composer' in meta:
+                    composer = meta['composer']
+                else:
+                    composer = None
+                if 'track_num' in meta:
+                    track_num = meta['track_num']
+                else:
+                    track_num = None
+                if 'album' in meta:
+                    album = meta['album']
+                else:
+                    album = None
+                if 'genre' in meta:
+                    genre = meta['genre']
+                else:
+                    genre = None
+
+                Audio.objects.create(
+                    GUID = dagr,
+                    duration = meta['duration'],
+                    title = meta['title'],
+                    genre = genre,
+                    composer = composer,
+                    track = track_num,
+                    album = album,
+                )
+            elif table == 'doc':
+                Word_Document.objects.create(
+                    GUID = dagr,
+                    char_count = meta['char_count'],
+                    word_count = meta['word_count'],
+                    author = meta['author'],
+                    date_created = meta['created'],
+                    date_modified = meta['modified']
+                )
+
+
+        return HttpResponse(json.dumps(data), content_type='application/json')
+    return HttpResponse("not a post request")
 
 def test(request):
     if request.method == "POST":
@@ -54,7 +131,7 @@ def home(request):
 
         url = 'https://api.twitter.com/1.1/users/lookup.json?screen_name='+handle
 
-        user_exist_response = oauth_req(url, CONSUMER_KEY, CONSUMER_SECRET)
+        user_exist_respnse = oauth_req(url, CONSUMER_KEY, CONSUMER_SECRET)
         data = json.loads(user_exist_response)
 
         if not isinstance(data, list):
@@ -86,24 +163,24 @@ def home(request):
 	                    # IN HERE GET ALL DIFFERENT MEDIAS AND CREATE DATABASE OBJECTS
 	                    media_url = tweet['entities']['media'][0]['media_url']
                     new_GUID = get_GUID()
-                    DAGR.objects.create(
+                    dagr = DAGR.objects.create(
 		        		GUID = new_GUID,
 		        		size = 0,
 		        		annotated_name = tweet_id,
-		        		creation_date =  datetime.datetime.now()
+		        		creation_date =  datetime.datetime.now(),
+                        datatype = "tweet"
 	        		)
-                    if Tweet.objects.filter(picture_url=media_url).count() == 0:
-	                    tweet_list.append(
-	                    	Tweet(
-	                    		twitter_handle= twitter_handle,
-		                    	tweet_type = tweet_type,
-		                        likes = likes,
-		                        posting_date=ts,
-		                        GUID = new_GUID,
-		                        retweets = retweets,
-                        	)
+                    tweet_list.append(
+                	    Tweet(
+                            twitter_handle= twitter_handle,
+                            tweet_type = tweet_type,
+                            likes = likes,
+                            posting_date=ts,
+                            GUID = dagr,
+                            retweets = retweets,
+                    	)
 
-	                    )
+                    )
 
             Tweet.objects.bulk_create(tweet_list)
             context = {
