@@ -4,28 +4,39 @@
 
 
 
-  	<div class="container">
-  		<h3>Please input the DAGR that you want to get reach report from</h3>
-  		<form >
-			<div class="form-group">
-				<input type="text" class="form-control" name="q" value="" placeholder="Search the result ">
-			</div>
-			    <!--this line can be eliminated-->
-			    <p style="text-align: right; margin-top: 20px;">
-					<button type="submit" class="btn btn-primary" id="Search">Search</button>
-			       	<button type="submit" class="btn btn-primary" id="cancel">Cancel</button>
-			    </p>
-		</form>
-	</div>
+<!--##########################################main part###########################################################-->
+<!--title-->
+<div class="container">
+    <div class="page-header">
+  <h1> Reach Report<small></small></h1>
+</div>
 
-	<div class="container">
+
+<!--panel for search-->
+<div class="panel panel-default">
+<div class="panel-heading"><p>Please input the DAGR that you want to find report</p>
+  <div class="panel-body">
+
+
+        <input type="text" class="form-control" aria-label="...">
+
+    <p style="text-align: right; margin-top: 20px;">
+      <button type="submit" class="btn btn-primary" id="search">Search</button>
+      <button type="submit" class="btn btn-primary" id="cancel">Cancel</button>
+    </p>
+  </div>
+</div>
+  </div>
+
+
+
+
+  <!--panel for table result-->
 			
-		<div class="panel panel-default" id="panel4">
-            <div class="panel-body">
-             	<label><b>Here are files you are looking for</b></label>
-             	<br>	
-					
-					<table class="table">
+<div class="panel panel-success">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><b>These are the files that you are looking for:</b></div>
+					<table class="table table-striped">
 					  <thead class="thead-default">
 					    <tr>
 					      <th>File Name</th>
@@ -100,6 +111,7 @@
 					  </tbody>
 					  {% endfor %}
 					</table>
+          </div>
 				</div>
 			</div>
 

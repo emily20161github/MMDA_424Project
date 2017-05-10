@@ -1,0 +1,99 @@
+{% extends 'DAGR/base.html' %}
+
+{% block content %}
+
+
+<div class="container"> 
+  <div class="page-header">
+    <h1>Category <small></small></h1>
+  </div>
+   
+<div class="panel panel-danger">
+  <!-- Default panel contents -->
+  
+
+  <!-- Default panel contents -->
+  <div class="panel-heading"><b>please select files that you want to make category</b></div>
+					<table class="table">
+					  <thead class="thead-default">
+					    <tr>
+              <th>select</th>
+                          <th>File Name</th>
+                          <th>File GUID</th>
+                          <th>File Type</th>
+                          <th>Local Path</th>
+                          <th>annotated_name</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					  {% for file in all_files %}
+					    <tr>
+					      <th scope="row"><a href=" {% url 'MMDA:details' File.GUID %} ">
+
+        <input type="checkbox" aria-label="...">
+                </a>
+					      </th>
+					      <td>file.GUID</td>
+					      <td>file.Type</td>
+					      <td>file.parent</td>
+					      <td>file.children</td>
+                <td>file.children</td>
+
+					    </tr>
+					  </tbody>
+					  {% endfor %}
+					</table>
+
+          </div>
+				</div>
+
+        <div class="container">
+        <p style="text-align: right; margin-top: 20px;">
+                 <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#myMo">Edit </button>
+			</div>
+
+
+
+<!--modal part for edit button + select category or create new category-->
+          <div class="col-md-2"></div>
+
+      <div id="myMo" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <label><b>Please select one or create a new category</b></label>
+
+                      <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+
+                          <div class="list-group">
+                            <a href="#" class="list-group-item">food</a>
+                            <a href="#" class="list-group-item">NewS</a>
+                            <a href="#" class="list-group-item">Weather</a>
+                            <a href="#" class="list-group-item">sports</a>
+                            <a href="#" class="list-group-item">subject</a>
+                          </div>
+
+                           <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1"> new</span>
+                            <input type="text" class="form-control" placeholder="please enter " aria-describedby="basic-addon1">
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <div class="modal-footer">
+              <button type="button" data-dismiss="modal" class="btn btn-primary" id="Submit">Submit</button>
+              <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      </div>
+    </div>
+
+{% endblock %}

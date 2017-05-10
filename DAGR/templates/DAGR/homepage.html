@@ -3,128 +3,21 @@
 {% block content %}
 
 
+
+
 <!--main part-->
+<div class="jumbotron">
+   <div class="page-header">
+  <h1>Hello ! welcome </h1>
+</div>
+<br>
 
-  <div class="container">
-  	<h3>Search for the DAGR you want</h3>
-		  <div class="form-group">
-		      <input type="text" class="form-control" name="q" value="" placeholder="Search the result ">
-		  </div>
+<p>this website is built by <b>Eric Yang</b> & <b>Emily Yue Wang</b></p>
 
-		  <div class="form-group">
-  			 <select class="form-control" id="sel1">
-            <option value="">select one method</option>
-   				 <option> by keyword</option>
-    			 <option> by name</option>
-   				 <option> by date</option>
-    			 <option> by size</option>
-    			 <option> by file type</option>
-  			 </select>
-		  </div>
-    <p style="text-align: right; margin-top: 20px;">
-      <button type="submit" class="btn btn-primary" id="search">Search</button>
-      <button type="submit" class="btn btn-primary" id="cancel">Cancel</button>
-    </p>
-  </div>
+<p>this website can allows you to name, annotate, store, and organize collections of data files into  our data aggregates called Data-Aggregates (DAGR for short)</p>
 
-    <!--this line can be eliminated-->
- 
-  <div class="container">
-    <div class="panel panel-default" id="panel3">
-      <div class="panel-body">
-        <label><b>These are files you are looking for</b></label>
-        <br>
-        <br>
+</div>
 
-        <ul>
-          {% for file in all_files %}
-          <table class="table">
-            <thead class="thead-default">
-              <tr>
-                <th>File Name</th>
-                <th>Operation</th>
-
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row"><a href=" {% url 'MMDA:details' File.GUID %} ">{{ File.file_name }}</a>
-                </th>
-                <td>
-
-                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Delete</button>
-                    <div id="myModal" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-body">
-                              Are you sure?
-                              </div>
-                              <div class="modal-footer">
-                                  <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
-                                  <button type="button" data-dismiss="modal" class="btn">Cancel</button>
-                              </div>
-                          </div>
-                        </div>
-                </div>
-                 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModa">Update</button>
-
-                    <div id="myModa" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-body">
-                                  <div class="row">
-                                    <div class="panel panel-default">
-                                      <div class="panel-body">                 
-                                        <lable><b>Please select file that you want to replace the original file in database</b></lable>
-                                        <br>
-                                        <br>
-                                        <form method="post" enctype="multipart/form-data">
-                                          <input type="file" id="files" name="files" multiple="multiple" />
-                                        </form>
-                                        <div class="form-group">
-                                        <br>
-                                          <label for="usr">Or</label>
-                                          <br>
-                                          <label for="usr"> input the website</label>
-                                          <input type="text" class="form-control" id="usr">
-                                        </div>
-                                      </div>
-                                    </div>        
-                                  </div>  
-                                </div>
-                            </div>
-                             <div class="modal-footer">
-                              <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Submit</button>
-                              <button type="button" data-dismiss="modal" class="btn">Cancel</button>
-                            </div>
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-              </tr>
-            </tbody>
-          </table>
-          {% endfor %}
-        </ul>
-
-      </div>
-    </div>
-  </div>
-
-
-<script type="text/javascript">
-
-$('#search').click(function()
-{   
-    $("#panel3").toggle();     
-});
-
-</script>
-
-
-
-      </p>
-	  </form>
-  </div>
 {% endblock %}
+
 

@@ -5,38 +5,39 @@
 
 
 
-    <div class="container">
-        <label><b>Please slelect a specific time</label>
-        <div class="row">
-            <div class='col-sm-6'>
-                <div class="form-group">
-                    <div class='input-group date' id='datetimepicker1'>
-                        <input type='text' class="form-control" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--main part-->
+<!--title-->
 
-        <p style="text-align: right; margin-top: 20px;">
-                    <button type="submit" class="btn btn-primary" id="search">Search</button>
-                    <button type="submit" class="btn btn-primary" id="search">Cancel</button>
+ <div class="container">
+    <div class="page-header">
+       <h1>Time Report <small></small></h1>
+</div>
+
+
+
+<!--date input group-->
+<form class="form-inline">
+  <div class="form-group">
+    <label for="sDate">Start Date</label>
+      <input type="text" class="form-control" id="sDate" placeholder="eg:2014-03-23">
+  </div>
+  <div class="form-group">
+    <label for="eDate">End Date</label>
+    <input type="email" class="form-control" id="eDate" placeholder="eg:2017-01-23">
+  </div>
+  <p style="text-align: right; margin-top: 20px;">
+    <button type="submit" class="btn btn-primary" id="earch">Search</button>
+    <button type="submit" class="btn btn-primary" id="Cancel">Cancel</button>
         </p>
-    </div>
-    
+
+</form>
 
 
-    <div class="container">
-
-        <div class="panel panel-default" id="panel2">
-            <div class="panel-body"> 
-            <label><b>Here are files you are looking for</b></label>
-            <br>
-            <br>
-                    
-                    <table class="table">
+<!--result panel-->
+<div class="panel panel-success"  id="panel8">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><b>These are the files that you are looking for:</b></div>
+                    <table class="table table-striped">
                       <thead class="thead-default">
                         <tr>
                           <th>File Name</th>
@@ -117,19 +118,13 @@
         </div>
     </div>
 
-
     
 
 <script type="text/javascript">
 
-$('#search').click(function()
+$('#earch').click(function()
 {   
-    $("#panel2").toggle();    
+    $("#panel8").toggle();    
 });
-
-$(function () {
-                $('#datetimepicker1').datetimepicker();
-                $('#datetimepicker').data("DateTimePicker").FUNCTION();
-            });
 </script>
 {% endblock %}
