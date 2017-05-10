@@ -11,22 +11,6 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script><meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Ranga:400,700" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'image/style.css' %}" />
-<!-- Include Required Prerequisites -->
-<script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
-<!-- Include Date Range Picker -->
-<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-
-
-
-
-
-
-
-
-
 
 
 </head>
@@ -82,36 +66,23 @@
 </nav>
 
 
- <div class="container">
+
+<!--##########################################Main part###########################################################-->
+
+
+
+
+
+
+    <div class="container">
     <div class="page-header">
-  <h1>Time Report <small></small></h1>
+  <h1>Orphan Report <small></small></h1>
 </div>
-        <form class="form-inline">
-  <div class="form-group">
-    <label for="sDate">Start Date</label>
-    <input type="text" class="form-control" id="sDate" placeholder="eg:2014-03-23">
-  </div>
-  <div class="form-group">
-    <label for="eDate">End Date</label>
-    <input type="email" class="form-control" id="eDate" placeholder="eg:2017-01-23">
-  </div>
-
-
-
-        <p style="text-align: right; margin-top: 20px;">
-                    <button type="submit" class="btn btn-primary" id="earch">Search</button>
-                    <button type="submit" class="btn btn-primary" id="Cancel">Cancel</button>
-        </p>
-
-</form>
-
-
-    
-
-
-<div class="panel panel-success"  id="panel8">
+   
+<div class="panel panel-success">
   <!-- Default panel contents -->
   <div class="panel-heading"><b>These are the files that you are looking for:</b></div>
+                    
                     <table class="table table-striped">
                       <thead class="thead-default">
                         <tr>
@@ -122,9 +93,11 @@
                           <th>annotated_name</th>
                           <th>Operation</th>
                         </tr>
+                 
                       </thead>
+
                       <tbody>
-                      {% for file in all_files %}
+                       {% for file in all_files %}
                         <tr>
                           <th scope="row"><a href=" {% url 'MMDA:details' File.GUID %} ">{{ File.file_name }}</a>
                           </th>
@@ -184,8 +157,11 @@
                     </div>
                         </td>
                         </tr>
+                        {% endfor %}
                       </tbody>
-                      {% endfor %}
+
+                      </table>
+
                     </table>
                 </div>
             </div>
@@ -193,16 +169,7 @@
         </div>
     </div>
 
-
-    
-
-<script type="text/javascript">
-
-$('#earch').click(function()
-{   
-    $("#panel8").toggle();    
-});
-</script>
-
 </body>
 </html>
+
+

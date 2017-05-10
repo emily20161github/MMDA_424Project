@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>{%block title %}DAGR<{% endblock %}</title>
+	{% load staticfiles %} 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script><meta charset="UTF-8">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans|Ranga:400,700" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{% static 'DAGR/style.css' %}" />
+
+
+</head>
+<body>
+
+<!--brand-->
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+
+
+
+      <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>                        
+          </button>
+          <a class="navbar-brand" href="{% url 'MMDA:index'%}"> Multi-Media Database Aggregator</a>
+      </div>
+
+      
+
+<!--header -->
+    <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+           <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-plus"></span>Add</a>
+              <ul class="dropdown-menu">
+                <li><a href="{%MMDA:file-add %}"><span class="glyphicon glyphicon-file">File</a></li>
+                 <li><a href="{%MMDA:Web-add %}"><span class="glyphicon glyphicon-print">Wepage</a></li>
+              </ul>
+          </li>
+
+           <li><a href="#"><span class="glyphicon glyphicon-search"></span>Query</a></li>
+
+          <li><a href="#"><span class="glyphicon glyphicon-pencil"></span>Category</a></li>
+
+
+        <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-list-alt">Report<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-print"></span>Orphan Report</a></li>
+                <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-print"></span>Sterile Report</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-search"></span>Reach Report</a></li>
+                <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-search"></span>Time Report</a></li>
+              </ul>
+          </li>
+    </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+<!--##########################################main part###########################################################-->
+<div class="container">
+
+
+    <div class="page-header">
+  <h1>Category <small></small></h1>
+</div>
+   
+<div class="panel panel-danger">
+  <!-- Default panel contents -->
+  
+
+  <!-- Default panel contents -->
+  <div class="panel-heading"><b>please select files that you want to make category</b></div>
+					<table class="table">
+					  <thead class="thead-default">
+					    <tr>
+              <th>select</th>
+                          <th>File Name</th>
+                          <th>File GUID</th>
+                          <th>File Type</th>
+                          <th>Local Path</th>
+                          <th>annotated_name</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					  {% for file in all_files %}
+					    <tr>
+					      <th scope="row"><a href=" {% url 'MMDA:details' File.GUID %} ">
+
+        <input type="checkbox" aria-label="...">
+                </a>
+					      </th>
+					      <td>file.GUID</td>
+					      <td>file.Type</td>
+					      <td>file.parent</td>
+					      <td>file.children</td>
+                <td>file.children</td>
+
+					    </tr>
+					  </tbody>
+					  {% endfor %}
+					</table>
+
+          </div>
+				</div>
+
+        <div class="container">
+        <p style="text-align: right; margin-top: 20px;">
+                 <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#myMo">Edit </button>
+			</div>
+
+
+
+
+
+
+
+
+
+
+          <div class="col-md-2"></div>
+
+      <div id="myMo" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <label><b>Please select one or create a new category</b></label>
+
+                      <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+
+<div class="list-group">
+  <a href="#" class="list-group-item">food</a>
+  <a href="#" class="list-group-item">NewS</a>
+  <a href="#" class="list-group-item">Weather</a>
+  <a href="#" class="list-group-item">sports</a>
+  <a href="#" class="list-group-item">subject</a>
+</div>
+
+ <div class="input-group">
+  <span class="input-group-addon" id="basic-addon1"> new</span>
+  <input type="text" class="form-control" placeholder="please enter " aria-describedby="basic-addon1">
+</div>
+
+
+
+
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" data-dismiss="modal" class="btn btn-primary" id="Submit">Submit</button>
+              <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+<div class="container">
+      
+
+
+      	</div>
+
+</div>
+    </div>
+
+
+</body>
+</html>
+
+

@@ -1,28 +1,119 @@
+<!--{% extends 'MMDA/base.html'%}
+{% block title %}Add a weboage{% endblock %}-->
 
-{% extends 'DAGR/base.html' %}
+<!--using jquery to achieve the popup add -->
+<!--{% block body%}--><!-- Trigger the modal with a button -->
 
-{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{%block title %}DAGR<{% endblock %}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
+
+
+
+
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+
+
+
+      <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>                        
+          </button>
+          <a class="navbar-brand" href="{% url 'MMDA:index'%}"> Multi-Media Database Aggregator</a>
+      </div>
+
+      
+
+<!--header -->
+    <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+           <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-plus"></span>Add</a>
+              <ul class="dropdown-menu">
+                <li><a href="{%MMDA:file-add %}"><span class="glyphicon glyphicon-file">File</a></li>
+                 <li><a href="{%MMDA:Web-add %}"><span class="glyphicon glyphicon-print">Wepage</a></li>
+              </ul>
+          </li>
+
+           <li><a href="#"><span class="glyphicon glyphicon-search"></span>Query</a></li>
+
+          <li><a href="#"><span class="glyphicon glyphicon-pencil"></span>Category</a></li>
+
+
+        <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-list-alt">Report<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-print"></span>Orphan Report</a></li>
+                <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-print"></span>Sterile Report</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-search"></span>Reach Report</a></li>
+                <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-search"></span>Time Report</a></li>
+              </ul>
+          </li>
+    </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+
+
 
 <!--main part-->
 
 <div class="container">
-  <div class="row">
+
+    <div class="page-header">
+  <h1>Add Webpage<small></small></h1>
+</div>
+
+<div class="panel panel-danger">
+<div class="panel-heading"><p>please input one or multiple website </p>
+  <div class="panel-body">
+<div class="row">
+  <div class="col-lg-6">
+  
     <input type="hidden" name="count" value="1" />
         <div class="control-group" id="fields">
-            <h2>Add webiste into database</h2>
             <div class="controls" id="profs"> 
                 <form class="input-append">
-                    <div id="field"><input autocomplete="off" class="input" id="field1" name="prof1" type="text" placeholder="Type something" data-items="8"/><button id="b1" class="btn add-more" type="button">+</button></div>
+                    <div id="field"><input autocomplete="off" class="input" id="field1" name="prof1" type="text" placeholder="enter" webpage" data-items="8"/><button id="b1" class="btn add-more" type="button">+</button></div>
                 </form>
             <br>
             <small>(Press + to add another website)</small>
-            <p style="text-align: right; margin-top: 10px;">
+            <br>
+            <small>(Press - to delete website)</small>
+
+         
+            </div>             
+      </div>
+
+</div>
+</div>
+
+<p style="text-align: right; margin-top: 10px;">
                   <input type="submit" value="Submit" class="btn btn-lg btn-primary btn-sm" />
                   <input type="submit" value="Cancel" class="btn btn-lg btn-primary btn-sm" />
             </p>
-            </div>
-        </div>
-  </div>
+</div>
+</div>
 </div>
 
 
@@ -69,5 +160,8 @@
     margin-bottom:10px;
 }
 </style>
-{% endblock %}
+
+</body>
+</html>
+
 

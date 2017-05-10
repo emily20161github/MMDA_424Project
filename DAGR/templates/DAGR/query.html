@@ -1,16 +1,13 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>{%block title %}DAGR<{% endblock %}</title>
-	{% load staticfiles %} 
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script><meta charset="UTF-8">
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans|Ranga:400,700" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="{% static 'DAGR/style.css' %}" />
+  <title>{%block title %}DAGR<{% endblock %}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
 
 
 </head>
@@ -68,7 +65,9 @@
 
 
 
-<!--##########################################main part###########################################################-->
+
+
+<!--main part-->
 
 
 
@@ -76,21 +75,50 @@
 
 
 
-<div class="container">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <div class="container">
     <div class="page-header">
-  <h1> Reach Report<small></small></h1>
+  <h1>MMDA Search<small></small></h1>
 </div>
 
 
 <div class="panel panel-default">
-<div class="panel-heading"><p>Please input the DAGR that you want to find report</p>
+<div class="panel-heading"><p>please select one select type then enter the value</p>
   <div class="panel-body">
-
-
+<div class="row">
+  <div class="col-lg-6">
+    <div class="input-group">
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Search By <span class="caret"></span></button>
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li><a href="#"><b>Keyword</b></a></li>
+          <li><a href="#"><b>Name</b></a></li>
+          <li><a href="#"><b>Date</b></a></li>
+          <li><a href="#"><b>Size</b></a></li>
+          <li><a href="#"><b>Type</b></a></li>
+        </ul>
+      </div><!-- /btn-group -->  
         <input type="text" class="form-control" aria-label="...">
+
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+</div><!-- /.row -->
+
 
     <p style="text-align: right; margin-top: 20px;">
       <button type="submit" class="btn btn-primary" id="search">Search</button>
@@ -101,47 +129,44 @@
 
 
   </div>
-			
-<div class="panel panel-success">
+
+    <!--this line can be eliminated-->
+ 
+    <div class="panel panel-success" id="panel3">
   <!-- Default panel contents -->
   <div class="panel-heading"><b>These are the files that you are looking for:</b></div>
-					<table class="table table-striped">
-					  <thead class="thead-default">
-					    <tr>
-					      <th>File Name</th>
-					      <th>File GUID</th>
-					      <th>File Type</th>
-					      <th>Parent DAGR</th>
-					      <th>children DAGR</th>
-					      <th>Operation</th>
-					    </tr>
-					  </thead>
-					  <tbody>
-					  {% for file in all_files %}
-					    <tr>
-					      <th scope="row"><a href=" {% url 'MMDA:details' File.GUID %} ">{{ File.file_name }}</a>
-					      </th>
-					      <td>file.GUID</td>
-					      <td>file.Type</td>
-					      <td>file.parent</td>
-					      <td>file.children</td>
-					      <td>
+      <div class="panel-body">
+        <ul>
+          {% for file in all_files %}
+          <table class="table">
+            <thead class="thead-default">
+              <tr>
+                <th>File Name</th>
+                <th>Operation</th>
 
-		              	<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Delete</button>
-		              	<div id="myModal" class="modal fade" role="dialog">
-			                	<div class="modal-dialog">
-			                  		<div class="modal-content">
-				                    	<div class="modal-body">
-				                      Are you sure?
-				                    	</div>
-				                    	<div class="modal-footer">
-				                      		<button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
-				                      		<button type="button" data-dismiss="modal" class="btn">Cancel</button>
-				                    	</div>
-				                	</div>
-				                </div>
-				        </div>
-				        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModa">Update</button>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row"><a href=" {% url 'MMDA:details' File.GUID %} ">{{ File.file_name }}</a>
+                </th>
+                <td>
+
+                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Delete</button>
+                    <div id="myModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-body">
+                              Are you sure?
+                              </div>
+                              <div class="modal-footer">
+                                  <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
+                                  <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+                              </div>
+                          </div>
+                        </div>
+                </div>
+                 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModa">Update</button>
 
                     <div id="myModa" class="modal fade" role="dialog">
                         <div class="modal-dialog">
@@ -175,33 +200,31 @@
                         </div>
                       </div>
                     </div>
-		             	</td>
-					    </tr>
-					  </tbody>
-					  {% endfor %}
-					</table>
-          </div>
-				</div>
-			</div>
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+        </ul>
 
-      	</div>
+      </div>
     </div>
+  </div>
 
-    
 
 <script type="text/javascript">
 
-$('#Search').click(function()
+$('#search').click(function()
 {   
-    $("#panel4").toggle();     
+    $("#panel3").toggle();     
 });
 
 </script>
 
 
 
+      </p>
+	  </form>
+  </div>
 
 </body>
 </html>
-
-
