@@ -1,6 +1,7 @@
 <!--{% extends 'MMDA/base.html'%}
 {% block title %}Add a New file{% endblock %}-->
 
+<<<<<<< HEAD
 
 <!DOCTYPE html>
 <html lang="en">
@@ -119,18 +120,49 @@
                       </form>
                     </div>
                   </div>
+=======
+{% block content %}
+<div class="container">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+    	<h2>Please select file that you want to add to database</h2><br>
+        <form method="post" id="atrForm" enctype="multipart/form-data"> {% csrf_token %}
+            <input type="file" id="files" name="files" multiple="multiple" />
+            <p style="text-align: right; margin-top: 20px;">
+               <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myMod">upload files</button>
+            </p>
+        </form>
+    </div>
+    <div class="col-md-2"></div>
+
+  <div id="myMod" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <label><b>Please input the attribute of this file</b></label>
+              <div class="panel panel-default">
+                <div class="panel-body">
+                    Annotated Name: <input type ="text" form="atrForm" name="annotated_name"><br>
+                    Keywords: <br>
+                    <textarea rows="4" cols="50" name="keywords" form="atrForm" placeholder="Seperate Keywords by Semicolon! Ex... key1;key2;key3"></textarea>
+                    <div class="modal-footer">
+		              <input type="submit" class="btn btn-primary" form="atrForm" id="Submit">
+		              <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+		            </div>
+>>>>>>> f63e6126b58729ca5cf56d4fb5ea0e5ead930800
                 </div>
               </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" data-dismiss="modal" class="btn btn-primary" id="Submit">Submit</button>
-              <button type="button" data-dismiss="modal" class="btn">Cancel</button>
             </div>
           </div>
           </div>
           </div>
         </div>
+        
       </div>
+    </div>
+  </div>
 
 </body>
 </html>

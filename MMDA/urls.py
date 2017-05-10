@@ -19,5 +19,4 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('DAGR.urls')), # DAGR creation site
-    url(r'^use_twitter', include('use_twitter.urls')), # tweet finder app
 ]

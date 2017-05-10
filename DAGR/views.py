@@ -4,6 +4,7 @@ from django.conf import settings
 import urllib2
 
 from DAGR.models import *
+from .forms import UploadFileForm
 
 import oauth2
 import json
@@ -16,11 +17,35 @@ ACCESS_SECRET = settings.ACCESS_SECRET
 # Create your views here.
 
 def test(request):
+    if request.method == "POST":
+        if request.FILES and request.POST:
+            a = []
+            for file in request.FILES["files"]:
+                
+                a.append([type(file).__name__])
+
+            if request.POST["annotated_name"] and request.POST['keywords']:
+                context = {
+                    "name" : 0,
+                    "key" : 0,
+                    "a" : a
+                }
+                context['name'] = request.POST["annotated_name"]
+                context['key'] = request.POST['keywords']
+            else:
+                context = {
+                    'error' : "Form was invalid, please try again filling out appropriate fields"
+                }
+                return render(request, 'DAGR/addfile.html', context)
+
+
+
+            return HttpResponse(json.dumps(context), content_type='application/json')
+        return HttpResponse(request.POST)
     context = {}
-    return render(request, 'DAGR/Time_Report.html', context)
+    return render(request, 'DAGR/addfile.html', context)
 
 def home(request):
-
     # If the form was submitted
     if request.method == "POST":
         # First check if the user exists
