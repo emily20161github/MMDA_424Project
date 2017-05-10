@@ -1,114 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>{%block title %}DAGR<{% endblock %}</title>
-    {% load staticfiles %} 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script><meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Ranga:400,700" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'image/style.css' %}" />
-<!-- Include Required Prerequisites -->
-<script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
-<!-- Include Date Range Picker -->
-<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+{% extends 'DAGR/base.html' %}
+
+{% block content %}
 
 
 
 
-
-
-
-
-
-
-
-</head>
-<body>
-
-<!--brand-->
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-
-
-
-      <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>                        
-          </button>
-          <a class="navbar-brand" href="{% url 'MMDA:index'%}"> Multi-Media Database Aggregator</a>
-      </div>
-
-      
-
-<!--header -->
-    <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav">
-           <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-plus"></span>Add</a>
-              <ul class="dropdown-menu">
-                <li><a href="{%MMDA:file-add %}"><span class="glyphicon glyphicon-file">File</a></li>
-                 <li><a href="{%MMDA:Web-add %}"><span class="glyphicon glyphicon-print">Wepage</a></li>
-              </ul>
-          </li>
-
-           <li><a href="#"><span class="glyphicon glyphicon-search"></span>Query</a></li>
-
-          <li><a href="#"><span class="glyphicon glyphicon-pencil"></span>Category</a></li>
-
-
-        <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-list-alt">Report<span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-print"></span>Orphan Report</a></li>
-                <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-print"></span>Sterile Report</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-search"></span>Reach Report</a></li>
-                <li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-search"></span>Time Report</a></li>
-              </ul>
-          </li>
-    </ul>
-
-    </div>
-  </div>
-</nav>
-
+<!--main part-->
+<!--title-->
 
  <div class="container">
     <div class="page-header">
-  <h1>Time Report <small></small></h1>
+       <h1>Time Report <small></small></h1>
 </div>
-        <form class="form-inline">
+
+
+
+<!--date input group-->
+<form class="form-inline">
   <div class="form-group">
     <label for="sDate">Start Date</label>
-    <input type="text" class="form-control" id="sDate" placeholder="eg:2014-03-23">
+      <input type="text" class="form-control" id="sDate" placeholder="eg:2014-03-23">
   </div>
   <div class="form-group">
     <label for="eDate">End Date</label>
     <input type="email" class="form-control" id="eDate" placeholder="eg:2017-01-23">
   </div>
-
-
-
-        <p style="text-align: right; margin-top: 20px;">
-                    <button type="submit" class="btn btn-primary" id="earch">Search</button>
-                    <button type="submit" class="btn btn-primary" id="Cancel">Cancel</button>
+  <p style="text-align: right; margin-top: 20px;">
+    <button type="submit" class="btn btn-primary" id="earch">Search</button>
+    <button type="submit" class="btn btn-primary" id="Cancel">Cancel</button>
         </p>
 
 </form>
 
 
-    
-
-
+<!--result panel-->
 <div class="panel panel-success"  id="panel8">
   <!-- Default panel contents -->
   <div class="panel-heading"><b>These are the files that you are looking for:</b></div>
@@ -193,7 +118,6 @@
         </div>
     </div>
 
-
     
 
 <script type="text/javascript">
@@ -203,6 +127,4 @@ $('#earch').click(function()
     $("#panel8").toggle();    
 });
 </script>
-
-</body>
-</html>
+{% endblock %}

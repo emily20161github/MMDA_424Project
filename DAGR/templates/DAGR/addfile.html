@@ -1,93 +1,35 @@
 <!--{% extends 'MMDA/base.html'%}
 {% block title %}Add a New file{% endblock %}-->
+{% extends 'DAGR/base.html' %}
 
-<<<<<<< HEAD
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>{%block title %}DAGR<{% endblock %}</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
-
-
-</head>
-<body>
-<nav class="navbar navbar-inverse">
-  	<div class="container-fluid">
-    	<div class="navbar-header">
-      		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        		<span class="icon-bar"></span>
-        		<span class="icon-bar"></span>
-        		<span class="icon-bar"></span>                        
-      		</button>
-      		<a class="navbar-brand" href="{% url 'MMDA:index'%}">DAGR</a>
-    	</div>
-
-<!--header -->
-    <div class="collapse navbar-collapse" id="myNavbar">
-      	<ul class="nav navbar-nav">
-       		 <li class="dropdown">
-            	<a class="dropdown-toggle" data-toggle="dropdown" href="#">Add Document <span class="caret"></span></a>
-          		<ul class="dropdown-menu">
-            		<li><a href="{%MMDA:file-add %}"><span class="glyphicon glyphicon-file">Add File</a></li>
-           			 <li><a href="{%MMDA:Web-add %}"><span class="glyphicon glyphicon-print">Add Wepage</a></li>
-          		</ul>
-        	</li>
-
-        	<li><a href="#">Category</a></li>
-
-     		<li class="dropdown">
-           		<a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-print">Report <span class="caret"></span></a>
-          		<ul class="dropdown-menu">
-           			<li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-print"></span>Orphan Report</a></li>
-            		<li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-open-file"></span>Sterile Report</a></li>
-            		<li><a href="{% url 'MMDA: ' %}"><span class="glyphicon glyphicon-open-file"></span>Time Report</a></li>
-          		</ul>
-        	</li>
-		</ul>
-
-    </div>
-  </div>
-</nav>
+{% block content %}
 
 <!--##########################################main part###########################################################-->
 
-	<div class="container">
+  <div class="container">
 
 
-
+<!--title-->
 <div class="container">
     <div class="page-header">
-  <h1>Add File<small></small></h1>
+      <h1>Add File<small></small></h1>
 </div>
 
-
-
+<!--panel-->
 <div class="panel panel-danger">
-  <div class="panel-heading"><p>Please select file you want to add</p></div>
-  <div class="panel-body">
-<div class="row">
-  <div class="col-lg-6">
+  <div class="panel-heading"><p>Please select file you want to  add</p></div>
+   <div class="panel-body">
+     <div class="row">
+      <div class="col-lg-6">
    
-          <form method="post" enctype="multipart/form-data">
-              <input type="file" id="files" name="files" multiple="multiple" />
-             
-              </p>
+        <form method="post" id="atrForm" enctype="multipart/form-data"> {% csrf_token %}
+
+          <input type="file" id="files" name="files" multiple="multiple" />
           </form>
-
-   <!-- /input-group -->
-  </div><!-- /.col-lg-6 -->
-</div><!-- /.row -->
-
-
-    <p style="text-align: right; margin-top: 20px;">
-                 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myMod">upload files</button>
-    </p>
+      </div><!-- /.col-lg-6 -->
+      </div><!-- /.row -->
+          <p style="text-align: right; margin-top: 20px;">
+                 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myMod">upload files</button></p>
   </div>
 </div>
 </div>
@@ -98,71 +40,41 @@
 
 
 
-	    <div class="col-md-2"></div>
-	    <div class="col-md-8">
-	
-	    </div>
-	    <div class="col-md-2"></div>
+<div class="col-md-2"></div>
+  <div class="col-md-8">
+  
+   </div>
+     <div class="col-md-2"></div>
 
       <div id="myMod" class="modal fade" role="dialog">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-body">
+
+
+<!--modal body-->
+
               <div class="row">
                 <div class="col-md-12">
 
-<div class="panel panel-default">
-  <div class="panel-heading">Please input the attribute of this file</div>
-  <div class="panel-body">
-                      <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {% include 'MMDA/form_template.html' %}
-                      </form>
-                    </div>
-                  </div>
-=======
-{% block content %}
-<div class="container">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-    	<h2>Please select file that you want to add to database</h2><br>
-        <form method="post" id="atrForm" enctype="multipart/form-data"> {% csrf_token %}
-            <input type="file" id="files" name="files" multiple="multiple" />
-            <p style="text-align: right; margin-top: 20px;">
-               <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myMod">upload files</button>
-            </p>
-        </form>
-    </div>
-    <div class="col-md-2"></div>
-
-  <div id="myMod" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-12">
-              <label><b>Please input the attribute of this file</b></label>
               <div class="panel panel-default">
-                <div class="panel-body">
-                    Annotated Name: <input type ="text" form="atrForm" name="annotated_name"><br>
+                <div class="panel-heading">Please input the attribute of this file</div>
+                     <div class="panel-body">
+
+                      Annotated Name: <input type ="text" form="atrForm" name="annotated_name"><br>
                     Keywords: <br>
                     <textarea rows="4" cols="50" name="keywords" form="atrForm" placeholder="Seperate Keywords by Semicolon! Ex... key1;key2;key3"></textarea>
-                    <div class="modal-footer">
-		              <input type="submit" class="btn btn-primary" form="atrForm" id="Submit">
-		              <button type="button" data-dismiss="modal" class="btn">Cancel</button>
-		            </div>
->>>>>>> f63e6126b58729ca5cf56d4fb5ea0e5ead930800
-                </div>
-              </div>
+
+
+<!--modal footer-->
+              <div class="modal-footer">
+               <input type="submit" class="btn btn-primary" form="atrForm" id="Submit">
+              <button type="button" data-dismiss="modal" class="btn">Cancel</button>
             </div>
           </div>
           </div>
           </div>
         </div>
-        
       </div>
-    </div>
-  </div>
 
-</body>
-</html>
+{% endblock %}
