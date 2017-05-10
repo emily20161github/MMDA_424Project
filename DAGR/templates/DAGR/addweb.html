@@ -9,16 +9,16 @@
   <div class="row">
     <input type="hidden" name="count" value="1" />
         <div class="control-group" id="fields">
-            <h2>Add webiste into database</h2>
+            <h2>Add DAGR of Website into Database</h2>
             <div class="controls" id="profs"> 
-                <form class="input-append">
-                    <div id="field"><input autocomplete="off" class="input" id="field1" name="prof1" type="text" placeholder="Type something" data-items="8"/><button id="b1" class="btn add-more" type="button">+</button></div>
+                <form class="input-append" name="url_form" method="post">
+                    {% csrf_token %}
+                    <div id="field"><input autocomplete="off" class="input" id="url" name="url" type="text" placeholder="enter valid url" data-items="8"/>
+                    
                 </form>
             <br>
-            <small>(Press + to add another website)</small>
             <p style="text-align: right; margin-top: 10px;">
-                  <input type="submit" value="Submit" class="btn btn-lg btn-primary btn-sm" />
-                  <input type="submit" value="Cancel" class="btn btn-lg btn-primary btn-sm" />
+                  <input type="submit" name="url_form" value="Submit" class="btn btn-lg btn-primary btn-sm" />
             </p>
             </div>
         </div>

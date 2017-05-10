@@ -93,6 +93,12 @@ def meta(request):
         return HttpResponse(json.dumps(data), content_type='application/json')
     return HttpResponse("not a post request")
 
+def add_website(request):
+    if request.method == 'POST':
+        return HttpResponse('working')
+    return render(request, 'DAGR/addweb.html', {})
+
+
 def test(request):
     if request.method == "POST":
         if request.FILES and request.POST:
@@ -123,6 +129,24 @@ def test(request):
     return render(request, 'DAGR/addfile.html', context)
 
 def home(request):
+    return render(request, 'DAGR/homepage.html', {})
+
+def query(request):
+    return render(request, 'DAGR/query.html', {})
+
+def orphan(request):
+    return render(request, 'DAGR/Orphan_Sterile.html', {})
+
+def sterile(request):
+    return render(request, 'DAGR/sterile.html', {})
+
+def reach(request):
+    return render(request, 'DAGR/Reach_Report.html', {})
+
+def time(request):
+    return render(request, 'DAGR/Time_Report.html', {})
+
+def twitter(request):
     # If the form was submitted
     if request.method == "POST":
         # First check if the user exists
