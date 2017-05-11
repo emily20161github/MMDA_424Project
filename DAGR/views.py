@@ -121,12 +121,11 @@ def details(request, GUID):
     tweet = (Tweet.objects.filter(GUID=dagr).first())
     doc = (Word_Document.objects.filter(GUID=dagr).first())
     objects.extend([dagr, web, img, vid, audio, tweet, doc])
-    for object in objects:
-        if object:
-            object.fields = dict(((field.name).upper, field.value_to_string(object)) 
-                    for field in object._meta.fields)
-
-
+    for obj in objects:
+        if obj:
+            obj.fields = dict(((field.name).upper, field.value_to_string(obj)) 
+                    for field in obj._meta.fields if not field.primary_key)
+    
 
     keywords = dagr.keyword_set.all()
     children = []

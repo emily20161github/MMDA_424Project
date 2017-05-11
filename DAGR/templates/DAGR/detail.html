@@ -15,12 +15,12 @@
   <div class="panel-heading"> <h2> Metadata </h2></div>
   <div class="panel-body">
     <ul class="list-group">
+      
       {% for object in objects %}
         {% for field, value in object.fields.iteritems %}
         <li class="list-group-item">{{ field }} : {{ value }}</li>
         {% endfor %}
       {% endfor %}
-     
     </ul>
   </div>
   <div class="panel-heading"> <h2> Parent Dagrs </h2></div>
