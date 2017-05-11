@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
+
+from bs4 import BeautifulSoup
 import urllib2
 
 from DAGR.models import *
