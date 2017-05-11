@@ -18,12 +18,13 @@
 
 <!--search panel-->
 <div class="panel panel-default">
-<div class="panel-heading"><p>please select one select type then enter the value</p>
+<div class="panel-heading"><p>Please select one select type then enter the value</p>
   <div class="panel-body">
 <div class="row">
   <div class="col-lg-6">
     <div class="input-group">
       <div class="input-group-btn">
+<<<<<<< HEAD
         <button name="dropdown" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Search By <span class="caret"></span></button>
         <ul class="dropdown-menu dropdown-menu-right">
            <li value="keyword"> <b>Keyword</b></li>
@@ -43,7 +44,32 @@
             <button type="submit" class="btn btn-primary" id="search">Search</button>
             <button type="submit" class="btn btn-primary" id="cancel">Cancel</button>
           </p>
+=======
+        <select type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" form="queryform" id="type"> 
+        <ul class="dropdown-menu dropdown-menu-right">
+          <option value="keyword">Keyword</option>
+          <option value="name">Name</option>
+          <option value="size">Date</option>
+          <option value="type">Size</option>
+        </ul>
+        </select>
+      </div><!-- /btn-group -->
+        <form id="queryform" method="post">
+          {% csrf_token %}
+          <input type="text" class="form-control" aria-label="..." id="params">
+                 </div><!-- /input-group -->
+                  </div><!-- /.col-lg-6 -->
+              </div><!-- /.row -->
+
+
+            <p style="text-align: right; margin-top: 20px;">
+              <input type="submit" class="btn btn-primary" id="search">
+            </p>
+        
+        </form>
+>>>>>>> 0b70be5d43ae40c406a491444c8725fbf5353aa6
       </div>
+
     </div>
 </div>
 
