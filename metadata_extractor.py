@@ -125,9 +125,11 @@ def file_metadata(directory, name, a_name, keywords):
 			metadata['size'] = os.path.getsize(metadata['localpath'])
 			metadata['file_name'] = name
 			metadata['a_name'] = a_name
+			metadata['keywords'] = []
 			if keywords != '-nk':
 				metadata['keywords'] = keywords.split(';')
 			else:
+			
 				metadata['keywords'] = []
 		else:
 			print "unsupported file extension"
@@ -165,14 +167,12 @@ FILE_EXTS = {
 HachoirConfig.quiet = True
 
 args = sys.argv
-
 last_arg = args.pop()
 keywords = args.pop()
 annotated_name = args.pop()
 print "python metadata_extractor.py dir <annotated_name>  <keywords>/-nk --bulk/--single"
 metadata = {
-	'data' : [],
-	"keywords" : [],
+	'data' : []
 }
 if last_arg == "--bulk":
 	directory = args[1]

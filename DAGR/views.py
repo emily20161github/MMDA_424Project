@@ -41,6 +41,16 @@ def meta(request):
                 local_path = path,
                 datatype = meta['type']
             )
+            for keyword in meta['keywords']:
+                if Keyword.objects.filter(keyword=keyword).count()==0:
+                    new_key = Keyword(keyword=keyword)
+                    
+                    new_key.save()
+                    new_key.dagr.add(dagr)
+                else:
+                    key = Keyword.objects.get(keyword=keyword)
+
+                    key.dagr.add(dagr)
             if table == 'img':
                 Image.objects.create(
                     GUID = dagr,
@@ -130,10 +140,26 @@ def test(request):
     context = {}
     return render(request, 'DAGR/addfile.html', context)
 
+def category(request):
+    return render(request, 'DAGR/category.html', {})
+
 def home(request):
     return render(request, 'DAGR/homepage.html', {})
 
 def query(request):
+    if request.method == 'POST':
+        d = dict(request.POST)
+        if request.POST['type'] == 'keyword':
+            qs = Keyword.objects.filter(keyword=request.POST['params'])
+            pass
+        elif request.POST['type'] == 'name':
+            pass
+        elif request.POST['type'] == 'size':
+            pass
+        elif request.POST['type'] == 'type':   
+            pass
+
+        return HttpResponse(json.dumps(d), content_type='application/json')
     return render(request, 'DAGR/query.html', {})
 
 def orphan(request):
@@ -218,6 +244,23 @@ def twitter(request):
     context = {}
     return render(request, 'DAGR/home.html', context)
 
+def get_dagr(GUID, type):
+    if type == "tweet":
+        pass
+    elif type == "audio":
+        pass
+    elif type == "video":
+        pass
+    elif type == "image":
+        pass
+    elif type == "document":
+        pass
+    elif type == "webpage":
+        pass
+
+
+
+
 def get_GUID():
 	response = urllib2.urlopen('http://setgetgo.com/guid/get.php')
 	return response.read()
@@ -228,14 +271,6 @@ def oauth_req(url, key, secret):
         client = oauth2.Client(consumer, access_token)
         resp, content = client.request(url)
         return content
-
-def gallery(request):
-    all_tweets = Tweet.objects.all()
-    context = {
-        'tweets' : all_tweets
-    }
-    return render(request, 'use_twitter/gallery.html', context)
-
 
 
 '''some function may be useful'''
@@ -274,20 +309,6 @@ def selection(request,selection,input):
     return render(request, 'query.html', {'result' : result})
 
 
-
-''''''
-
-
-'''bulk create into data'''
-def  bulk_create(request,fileName[n]):
- DAGR.objects.bulk_create([
-    for i in n:
-        DAGR(file_name="fileName[i]") ])
-
-
-
-'''click orphan report'''
-
 def orphan_Report(request):
 
     try:
@@ -303,8 +324,6 @@ def orphan_Report(request):
     return render(request, 'query.html', {'orphan_data' : orphan_data})
     
 
-''' single update'''
-
 def update(input):
 
     try:
@@ -313,7 +332,7 @@ def update(input):
         file.save()
 
     except DAGR.DoesNotExist:
-    pass
+        pass    
 
 
 def delete(input):
@@ -321,17 +340,7 @@ def delete(input):
         file= DAGR.objects.get(GUID=str(input))
         file.delete()
     except DAGR.DoesNotExist:
-    pass
-
-
-
-#DAGR.objects.filter(GUID=['input1', 'input2']).update(is_active=False)
-
-
-#models.Device.objects.filter(address__isnull=False).update(address=F('address').strip('福建省'))
-
-##Entry.objects.filter(blog__name='foo').update(comments_on=False)  #正确
-
+        pass
 
 
 

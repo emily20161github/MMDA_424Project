@@ -24,25 +24,25 @@
   <div class="col-lg-6">
     <div class="input-group">
       <div class="input-group-btn">
-        <select type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" form="queryform" id="type"> 
+        <select type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" form="queryform" name="type"> 
         <ul class="dropdown-menu dropdown-menu-right">
           <option value="keyword">Keyword</option>
           <option value="name">Name</option>
-          <option value="size">Date</option>
-          <option value="type">Size</option>
+          <option value="size">Size</option>
+          <option value="type">FileType</option>
         </ul>
         </select>
       </div><!-- /btn-group -->
         <form id="queryform" method="post">
           {% csrf_token %}
-          <input type="text" class="form-control" aria-label="..." id="params">
+          <input type="text" form="queryform" class="form-control" aria-label="..." name="params">
                  </div><!-- /input-group -->
                   </div><!-- /.col-lg-6 -->
               </div><!-- /.row -->
 
 
             <p style="text-align: right; margin-top: 20px;">
-              <input type="submit" class="btn btn-primary" id="search">
+              <input type="submit" form="queryform" class="btn btn-primary" id="search">
             </p>
         
         </form>

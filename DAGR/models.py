@@ -13,6 +13,9 @@ class DAGR(models.Model):
 	local_path = models.CharField(max_length=200, blank=True)
 	datatype = models.CharField(max_length=200, blank=True)
 
+	def __str__(self):
+		return self.GUID
+
 class Relationship(models.Model):
 	parent_GUID = models.ForeignKey(DAGR, related_name = 'parent', on_delete=models.CASCADE)
 	child_GUID = models.ForeignKey(DAGR, related_name = 'child', on_delete=models.CASCADE)
@@ -31,7 +34,8 @@ class Word_Document(models.Model):
 	date_modified = models.CharField(max_length=200)
 
 class Keyword(models.Model):
-	GUID = models.ForeignKey(DAGR, on_delete=models.CASCADE)
+
+	dagr = models.ManyToManyField(DAGR)
 	keyword = models.CharField(max_length=200)
 
 class Image(models.Model):
