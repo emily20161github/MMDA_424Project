@@ -234,6 +234,105 @@ def gallery(request):
     }
     return render(request, 'use_twitter/gallery.html', context)
 
+
+
+'''some function may be useful'''
+
+def type(input):
+    return DAGR.objects.filter(file_type=str(input))
+    
+
+def size(input):
+    return DAGR.objects.filter(size=str(input))
+
+def file_name(input):
+    return DAGR.objects.filter(file_name_contains='str(input)')
+
+def key_word(input):
+    return DAGR.objects.filter(Keyword_keyword_contains='str(input)')
+
+
+def date(input):
+    return DAGR.objects.filter(date='str(input)').value
+
+
+def selection(request,selection,input):
+
+    switcher = {
+        0: key_word,
+        1: file_name,
+        2: date,
+        3: size,
+        4: type,
+    }
+    try:
+        result= switcher
+    except DAGR.DoesNotExist:
+        raise Http404
+    return render(request, 'query.html', {'result' : result})
+
+
+
+''''''
+
+
+'''bulk create into data'''
+def  bulk_create(request,fileName[n]):
+ DAGR.objects.bulk_create([
+    for i in n:
+        DAGR(file_name="fileName[i]") ])
+
+
+
+'''click orphan report'''
+
+def orphan_Report(request):
+
+    try:
+        orphan_data=Relationship.objects.select_related('parent_GUID__GUID').extra(
+
+            select={'filename':"DAGR.file_name",},
+            #select={'filename':"select DAGR.file_name from DAGR left outer join Relationship on DAGR.GUID=Relationship.parent_GUID where parent_GUID is null"},
+            where=['Relationship.parent_GUID IS NULL']
+
+            )
+    except DAGR.DoesNotExist:
+        raise Http404
+    return render(request, 'query.html', {'orphan_data' : orphan_data})
+    
+
+''' single update'''
+
+def update(input):
+
+    try:
+        file = DAGR.objects.get(GUID='input')
+        file.is_active = False
+        file.save()
+
+    except DAGR.DoesNotExist:
+    pass
+
+
+def delete(input):
+    try:
+        file= DAGR.objects.get(GUID=str(input))
+        file.delete()
+    except DAGR.DoesNotExist:
+    pass
+
+
+
+#DAGR.objects.filter(GUID=['input1', 'input2']).update(is_active=False)
+
+
+#models.Device.objects.filter(address__isnull=False).update(address=F('address').strip('福建省'))
+
+##Entry.objects.filter(blog__name='foo').update(comments_on=False)  #正确
+
+
+
+
 """
 These 4 will require Hachoir/other parsing methods to get metadata
 
