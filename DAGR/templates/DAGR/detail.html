@@ -7,19 +7,50 @@
 
 <div class="container">
     <div class="page-header">
-  <h1>MMDA Detail<small></small></h1>
+  <h1>DAGR Details<small></small></h1>
 </div>
 
 <div class="panel panel-default">
   <!-- Default panel contents -->
-  <div class="panel-heading"></div>
+  <div class="panel-heading"> <h2> Metadata </h2></div>
   <div class="panel-body">
     <ul class="list-group">
-      {% for item in mylist %}
-     <li class="list-group-item">{{ item }}</li>
+      {% for object in objects %}
+        {% for field, value in object.fields.iteritems %}
+        <li class="list-group-item">{{ field }} : {{ value }}</li>
+        {% endfor %}
       {% endfor %}
+     
     </ul>
   </div>
+  <div class="panel-heading"> <h2> Parent Dagrs </h2></div>
+  <div class="panel-body">
+    <ul class="list-group">
+      {% if parents %}
+        {% for dagr in parents %}
+          <a href=" {% url 'details' dagr.GUID %} ">
+            <li class="list-group-item"> Name : {{ dagr.file_name }}</li>
+          </a>
+        {% endfor %}
+      {% else %}
+      <h3> No Parent DAGRs</h3>
+      {% endif %}
+    </ul>
+  </div>  
+  <div class="panel-heading"> <h2> Child Dagrs </h2></div>
+  <div class="panel-body">
+    <ul class="list-group">
+      {% if children %}
+        {% for dagr in children %}
+          <a href=" {% url 'details' dagr.GUID %} ">
+            <li class="list-group-item"> Name : {{ dagr.file_name }}</li>
+          </a>
+        {% endfor %}
+      {% else %}
+      <h3> No Child DAGRs</h3>
+      {% endif %}
+    </ul>
+  </div>  
 </div>
 {% endblock %}
 

@@ -111,8 +111,40 @@ def add_website(request):
     return render(request, 'DAGR/addweb.html', {})
 
 def details(request, GUID):
-    dagr = DAGR.objects.get(GUID=GUID)
-    return render(request, 'DAGR/detail.html', {'result' : dagr})
+    objects = []
+
+    dagr = DAGR.objects.get(GUID=GUID) 
+    web = (Webpage.objects.filter(GUID=dagr).first())
+    img =(Image.objects.filter(GUID=dagr).first())
+    vid = (Video.objects.filter(GUID=dagr).first())
+    audio = (Audio.objects.filter(GUID=dagr).first())
+    tweet = (Tweet.objects.filter(GUID=dagr).first())
+    doc = (Word_Document.objects.filter(GUID=dagr).first())
+    objects.extend([dagr, web, img, vid, audio, tweet, doc])
+    for object in objects:
+        if object:
+            object.fields = dict(((field.name).upper, field.value_to_string(object)) 
+                    for field in object._meta.fields)
+
+
+
+    keywords = dagr.keyword_set.all()
+    children = []
+    qs = Relationship.objects.filter(parent_GUID = dagr)
+    for q in qs:
+        children.append(q.child_GUID)
+    parents = []
+    qs = Relationship.objects.filter(child_GUID = dagr)
+    for q in qs:
+        parents.append(q.parent_GUID)
+
+    context = {
+        'objects': objects,
+        'children' : children,
+        'parents' : parents
+
+    }
+    return render(request, 'DAGR/detail.html', context)
 
 def test(request):
     if request.method == "POST":
@@ -345,23 +377,6 @@ def twitter(request):
 
     context = {}
     return render(request, 'DAGR/home.html', context)
-
-def get_dagr(GUID, type):
-    if type == "tweet":
-        pass
-    elif type == "audio":
-        pass
-    elif type == "video":
-        pass
-    elif type == "image":
-        pass
-    elif type == "document":
-        pass
-    elif type == "webpage":
-        pass
-
-
-
 
 def get_GUID():
 	response = urllib2.urlopen('http://setgetgo.com/guid/get.php')
