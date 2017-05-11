@@ -146,6 +146,7 @@ def category(request):
 def home(request):
     return render(request, 'DAGR/homepage.html', {})
 
+
 def query(request):
     if request.method == 'POST':
         d = dict(request.POST)
@@ -162,17 +163,78 @@ def query(request):
         return HttpResponse(json.dumps(d), content_type='application/json')
     return render(request, 'DAGR/query.html', {})
 
+
+
 def orphan(request):
-    return render(request, 'DAGR/Orphan_Sterile.html', {})
+    input=request.GET(orphan)
+    try:
+        orphanfile=Relationship.objects.select_related('parent_GUID__GUID').extra(
+
+            select={'filename':"DAGR.file_name",},
+            #select={'filename':"select DAGR.file_name from DAGR left outer join Relationship on DAGR.GUID=Relationship.parent_GUID where parent_GUID is null"},
+            where=['Relationship.parent_GUID IS NULL']
+
+            )
+    except DAGR.DoesNotExist:
+        raise Http404
+    return render(request, 'DAGR/orphan.html', {'orphanfile' : orphanfile})
+    
 
 def sterile(request):
-    return render(request, 'DAGR/sterile.html', {})
+    input=request.GET(sterile)
+    try:
+        orphanfile=Relationship.objects.select_related('child_GUID__GUID').extra(
+
+            select={'filename':"DAGR.file_name",},##need more code
+            #select={'filename':"select DAGR.file_name from DAGR left outer join Relationship on DAGR.GUID=Relationship.parent_GUID where parent_GUID is null"},
+            where=['Relationship.child_GUID IS NULL']
+
+            )
+    except DAGR.DoesNotExist:
+        raise Http404
+    return render(request, 'DAGR/sterile.html', {'sterilefile' : sterilefile})
+
 
 def reach(request):
     return render(request, 'DAGR/Reach_Report.html', {})
 
+
 def time(request):
-    return render(request, 'DAGR/Time_Report.html', {})
+    start_time=request.GET('start')
+    end_time = request.GET('end')
+    if start_time and end_time:
+        timefile=DAGR.objects.extra(
+            select={'filename':"DAGR.file_name",},##need code to not get specific thing or several attributes
+            where=['DAGR.creation_date > start_time and DAGR.creation_date < end_time']##probably cant do like this. need multiple select.
+            )
+    return render(request, 'DAGR/time.html', {'timefile':timefile})
+
+
+def delete(request):
+    input=request.GET('delete')
+    if input:
+        found= DAGR.objects.get(GUID=str(file.GUID))
+        found.delete()
+    
+
+
+def cancel(request):
+    input=request.Get('cancel')
+    url = self.get_success_url()
+    return HttpResponseRedirect(url)
+
+
+def update(request): ###need code
+    input = request.GET('add')
+    if input:
+        try:
+            file1 = DAGR.objects.get(GUID=str(file.GUID))
+            file1.is_active = False
+            file1.save()
+        except DAGR.DoesNotExist:
+            pass
+
+
 
 def twitter(request):
     # If the form was submitted
@@ -273,8 +335,6 @@ def oauth_req(url, key, secret):
         return content
 
 
-'''some function may be useful'''
-
 def type(input):
     return DAGR.objects.filter(file_type=str(input))
     
@@ -341,7 +401,6 @@ def delete(input):
         file.delete()
     except DAGR.DoesNotExist:
         pass
-
 
 
 """

@@ -25,6 +25,7 @@
     <div class="input-group">
       <div class="input-group-btn">
         <select type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" form="queryform" name="type"> 
+
         <ul class="dropdown-menu dropdown-menu-right">
           <option value="keyword">Keyword</option>
           <option value="name">Name</option>
@@ -32,13 +33,13 @@
           <option value="type">FileType</option>
         </ul>
         </select>
-      </div><!-- /btn-group -->
+      </div>
         <form id="queryform" method="post">
           {% csrf_token %}
           <input type="text" form="queryform" class="form-control" aria-label="..." name="params">
-                 </div><!-- /input-group -->
-                  </div><!-- /.col-lg-6 -->
-              </div><!-- /.row -->
+                 </div>
+                  </div>
+              </div>
 
 
             <p style="text-align: right; margin-top: 20px;">
@@ -46,6 +47,7 @@
             </p>
         
         </form>
+
       </div>
 
     </div>
@@ -60,7 +62,7 @@
   <div class="panel-heading"><b>These are the files that you are looking for:</b></div>
       <div class="panel-body">
         <ul>
-          {% for file in all_files %}
+          {% if result %}
           <table class="table">
             <thead class="thead-default">
               <tr>
@@ -70,12 +72,13 @@
               </tr>
             </thead>
             <tbody>
+            {% for file in result %}
               <tr>
-                <th scope="row"><a href=" {% url 'MMDA:details' File.GUID %} ">{{ File.file_name }}</a>
+                <th scope="row"><a href=" {% url 'MMDA:details' File.GUID %} ">{{ file.file_name }}</a>
                 </th>
                 <td>
 
-                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Delete</button>
+                    <button  type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Delete</button>
                     <div id="myModal" class="modal fade" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -83,8 +86,8 @@
                               Are you sure?
                               </div>
                               <div class="modal-footer">
-                                  <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
-                                  <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+                                  <button name="delete" type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
+                                  <button name = "cancel" type="button" data-dismiss="modal" class="btn">Cancel</button>
                               </div>
                           </div>
                         </div>
@@ -117,18 +120,21 @@
                                 </div>
                             </div>
                              <div class="modal-footer">
-                              <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Submit</button>
-                              <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+                              <button name="add" type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Submit</button>
+                              <button name="cancel" type="button" data-dismiss="modal" class="btn">Cancel</button>
                             </div>
                         </div>
                       </div>
                     </div>
                   </td>
+
               </tr>
+               {% endfor %}
             </tbody>
+
           </table>
 
-              {% endfor %}
+         {% endif %}    
         </ul>
 
       </div>
