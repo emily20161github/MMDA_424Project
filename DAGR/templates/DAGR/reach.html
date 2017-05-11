@@ -66,8 +66,8 @@
 				                      Are you sure?
 				                    	</div>
 				                    	<div class="modal-footer">
-				                      		<button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
-				                      		<button type="button" data-dismiss="modal" class="btn">Cancel</button>
+				                      		<button name="delete" type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
+				                      		<button name = "cancel" type="button" data-dismiss="modal" class="btn">Cancel</button>
 				                    	</div>
 				                	</div>
 				                </div>
@@ -100,17 +100,20 @@
                                 </div>
                             </div>
                              <div class="modal-footer">
-                              <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Submit</button>
-                              <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+                               <button name="add" type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Submit</button>
+                              <button name="cancel" type="button" data-dismiss="modal" class="btn">Cancel</button>
                             </div>
                         </div>
                       </div>
                     </div>
 		             	</td>
 					    </tr>
-					  </tbody>
-					  {% endfor %}
-					</table>
+					   {% endfor %}
+            </tbody>
+
+          </table>
+
+         {% endif %}   
           </div>
 				</div>
 			</div>

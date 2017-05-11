@@ -24,16 +24,16 @@
   <div class="col-lg-6">
     <div class="input-group">
       <div class="input-group-btn">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Search By <span class="caret"></span></button>
+        <button name="dropdown" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Search By <span class="caret"></span></button>
         <ul class="dropdown-menu dropdown-menu-right">
-          <li><a href="#"><b>Keyword</b></a></li>
-          <li><a href="#"><b>Name</b></a></li>
-          <li><a href="#"><b>Date</b></a></li>
-          <li><a href="#"><b>Size</b></a></li>
-          <li><a href="#"><b>Type</b></a></li>
+           <li value="keyword"> <b>Keyword</b></li>
+          <li value="name"><b>Name</b></li>
+          <li value="date"><b>Date</b></li>
+          <li value="size"><b>Size</b></li>
+          <li value="type"><b>Type</b></li>
         </ul>
       </div><!-- /btn-group -->  
-        <input type="text" class="form-control" aria-label="...">
+        <input type="text" class="form-control" name="query">
                </div><!-- /input-group -->
                 </div><!-- /.col-lg-6 -->
             </div><!-- /.row -->
@@ -56,7 +56,7 @@
   <div class="panel-heading"><b>These are the files that you are looking for:</b></div>
       <div class="panel-body">
         <ul>
-          {% for file in all_files %}
+         { % if result %}
           <table class="table">
             <thead class="thead-default">
               <tr>
@@ -66,12 +66,13 @@
               </tr>
             </thead>
             <tbody>
+            {% for file in result %}
               <tr>
-                <th scope="row"><a href=" {% url 'MMDA:details' File.GUID %} ">{{ File.file_name }}</a>
+                <th scope="row"><a href=" {% url 'MMDA:details' File.GUID %} ">{{ file.file_name }}</a>
                 </th>
                 <td>
 
-                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Delete</button>
+                    <button  type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Delete</button>
                     <div id="myModal" class="modal fade" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -79,8 +80,8 @@
                               Are you sure?
                               </div>
                               <div class="modal-footer">
-                                  <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
-                                  <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+                                  <button name="delete" type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
+                                  <button name = "cancel" type="button" data-dismiss="modal" class="btn">Cancel</button>
                               </div>
                           </div>
                         </div>
@@ -113,18 +114,21 @@
                                 </div>
                             </div>
                              <div class="modal-footer">
-                              <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Submit</button>
-                              <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+                              <button name="add" type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Submit</button>
+                              <button name="cancel" type="button" data-dismiss="modal" class="btn">Cancel</button>
                             </div>
                         </div>
                       </div>
                     </div>
                   </td>
+
               </tr>
+               {% endfor %}
             </tbody>
+
           </table>
 
-              {% endfor %}
+         {% endif %}    
         </ul>
 
       </div>
