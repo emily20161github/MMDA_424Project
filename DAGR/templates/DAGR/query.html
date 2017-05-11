@@ -28,7 +28,8 @@
 
         <ul class="dropdown-menu dropdown-menu-right">
           <option value="keyword">Keyword</option>
-          <option value="name">Name</option>
+          <option value="name">File Name</option>
+          <option value="aname">Annotated Name</option>
           <option value="size">Size</option>
           <option value="type">FileType</option>
         </ul>
@@ -59,7 +60,7 @@
  
 <div class="panel panel-success" id="panel3">
   <!-- Default panel contents -->
-  <div class="panel-heading"><b>These are the files that you are looking for:</b></div>
+  <div class="panel-heading"><b>These are the DAGRs  that you are looking for:</b></div>
       <div class="panel-body">
         <ul>
           {% if result %}
@@ -67,15 +68,15 @@
             <thead class="thead-default">
               <tr>
                 <th>File Name</th>
-                <th>Operation</th>
 
               </tr>
             </thead>
             <tbody>
-            {% for file in result %}
+            {% for dagr in result %}
               <tr>
-                <th scope="row"><a href=" {% url 'MMDA:details' File.GUID %} ">{{ file.file_name }}</a>
+                <th scope="row"><a href=" {% url 'details' dagr.GUID %} ">{{ dagr.file_name }}</a>
                 </th>
+                <!--
                 <td>
 
                     <button  type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Delete</button>
@@ -91,7 +92,7 @@
                               </div>
                           </div>
                         </div>
-                </div>
+                    </div>
                  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModa">Update</button>
 
                     <div id="myModa" class="modal fade" role="dialog">
@@ -127,14 +128,16 @@
                       </div>
                     </div>
                   </td>
+                  -->
 
               </tr>
                {% endfor %}
             </tbody>
 
           </table>
-
-         {% endif %}    
+          {% else %}
+          <h2>{{ dagr }}</h2>
+          {% endif %}    
         </ul>
 
       </div>

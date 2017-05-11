@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^reach$', views.reach, name='reach'),
     url(r'^time$', views.time, name='time'),
     url(r'^category$', views.category, name='category'),
+    url(r'^details/(?P<GUID>.+)$', views.details, name='details'),
 
 
 ]

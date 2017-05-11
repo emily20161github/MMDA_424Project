@@ -110,6 +110,9 @@ def add_website(request):
         return HttpResponse('working')
     return render(request, 'DAGR/addweb.html', {})
 
+def details(request, GUID):
+    dagr = DAGR.objects.get(GUID=GUID)
+    return render(request, 'DAGR/detail.html', {'result' : dagr})
 
 def test(request):
     if request.method == "POST":
@@ -151,14 +154,51 @@ def query(request):
     if request.method == 'POST':
         d = dict(request.POST)
         if request.POST['type'] == 'keyword':
-            qs = Keyword.objects.filter(keyword=request.POST['params'])
-            pass
+            k = request.POST['params']
+            if Keyword.objects.filter(keyword=k).count() == 0:
+                return render(request, 'DAGR/query.html', {'error' : 'No DAGRs With Keyword ' + k +' Found'})
+            else:
+                keyword = Keyword.objects.get(keyword=k)
+                dagrs = keyword.dagr.all()  
+                return render(request, 'DAGR/query.html', {'error' : 'success', 'result':dagrs})
+
+        elif request.POST['type'] == 'aname':
+            k = request.POST['params']
+            qs = DAGR.objects.filter(annotated_name__contains=k)
+            if qs.count() == 0:
+                return render(request, 'DAGR/query.html', {'error' : 'No DAGRs With Annotated Name ' + k +' Found'})
+            else:
+                return render(request, 'DAGR/query.html', {'error' : 'success', 'result':qs})
         elif request.POST['type'] == 'name':
-            pass
+            k = request.POST['params']
+            qs = DAGR.objects.filter(file_name__contains=k)
+            if qs.count() == 0:
+                return render(request, 'DAGR/query.html', {'error' : 'No DAGRs With File Name ' + k +' Found'})
+            else:
+                return render(request, 'DAGR/query.html', {'error' : 'success', 'result':qs})
+
         elif request.POST['type'] == 'size':
-            pass
+            k = request.POST['params'].split(" ")
+            min = k[0]
+            max = k[1]
+            if max < min:
+                return render(request, 'DAGR/query.html', {'error' : 'max size must be less than minimum size'})
+            else:
+                qs = DAGR.objects.filter(size__gte=min, size__lte=max)
+                if qs.count()==0:
+                    msg = "No DAGRs with size >= " + str(min) + " and <= " + str(max) + " were found."
+                    return render(request, 'DAGR/query.html', {'error' : msg})
+                else:
+                    return render(request, 'DAGR/query.html', {'error' : 'success', 'result':qs})
+
+
         elif request.POST['type'] == 'type':   
-            pass
+            k = request.POST['params']
+            qs = DAGR.objects.filter(datatype__contains=k)
+            if qs.count() == 0:
+                return render(request, 'DAGR/query.html', {'error' : 'No DAGRs With Datatype ' + k +' Found'})
+            else:
+                return render(request, 'DAGR/query.html', {'error' : 'success', 'result':qs})
 
         return HttpResponse(json.dumps(d), content_type='application/json')
     return render(request, 'DAGR/query.html', {})
@@ -166,7 +206,7 @@ def query(request):
 
 
 def orphan(request):
-    input=request.GET(orphan)
+    input=request.GET['orphan']
     try:
         orphanfile=Relationship.objects.select_related('parent_GUID__GUID').extra(
 
@@ -325,7 +365,7 @@ def get_dagr(GUID, type):
 
 def get_GUID():
 	response = urllib2.urlopen('http://setgetgo.com/guid/get.php')
-	return response.read()
+	return response.read()[1:-1]
 
 def oauth_req(url, key, secret):
         consumer = oauth2.Consumer(key=CONSUMER_KEY, secret=CONSUMER_SECRET)

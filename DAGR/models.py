@@ -38,6 +38,9 @@ class Keyword(models.Model):
 	dagr = models.ManyToManyField(DAGR)
 	keyword = models.CharField(max_length=200)
 
+	def __str__(self):
+		return self.keyword
+
 class Image(models.Model):
 	GUID = models.ForeignKey(DAGR, on_delete=models.CASCADE)
 	image_width = models.IntegerField()
