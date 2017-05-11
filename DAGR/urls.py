@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^sterile$', views.sterile, name='sterile'),
     url(r'^reach$', views.reach, name='reach'),
     url(r'^time$', views.time, name='time'),
+    url(r'^category$', views.category, name='category'),
 
 
 ]
