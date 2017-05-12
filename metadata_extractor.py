@@ -190,7 +190,7 @@ elif last_arg == "--single":
 	metadata['data'] = [file_metadata(file_name, file_name, annotated_name, keywords)]
 d = json.dumps(metadata, ensure_ascii=False, default=datetime_handler)
 print d
-url = 'http://127.0.0.1:8000/add_metadata'
+url = 'http://ericyang24.pythonanywhere.com/add_metadata'
 headers = {'Content-type': 'application/json'}
 r = requests.post(url, data=d, headers=headers)
 f = open('response.html', 'w')
