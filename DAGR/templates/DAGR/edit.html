@@ -27,8 +27,8 @@
                     </div>
                 </div>
                 <form id="queryform" method="post" name="queryform">
-                  {% csrf_token %} 
-                  <input  class="form-control" name="a_name" type="text" value="{{ a_n }}" > 
+                  {% csrf_token %}
+                  <input  class="form-control" name="a_name" type="text" value="{{ a_n }}" >
 
             </div>
             <br>
@@ -42,7 +42,7 @@
                     </div>
 
                 </div>
-                <input  class="form-control" form="queryform" name="add_parent" type="text" value="" > 
+                <input  class="form-control" form="queryform" placeholder="input parent GUID ex. 00520FF5-3247-DB4E-16BB-5F891E840395" name="add_parent" type="text" value="" >
 
             </div>
             <br>
@@ -56,7 +56,7 @@
                     </div>
 
                 </div>
-                <input  class="form-control" form="queryform" name="add_child" type="text" value=""> 
+                <input  class="form-control" form="queryform" placeholder="input child GUID ex. 00520FF5-3247-DB4E-16BB-5F891E840395" name="add_child" type="text" value="">
 
             </div>
 
