@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # OUR APPS
     'DAGR',
-    'use_twitter',
 ]
 
 MIDDLEWARE = [
@@ -84,24 +83,20 @@ WSGI_APPLICATION = 'MMDA.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase',
-    }
-    
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ericyang24$MMDA',
+        'USER': 'ericyang24',
+        'PASSWORD': 'brim725tow418',
+        'HOST': 'ericyang24.mysql.pythonanywhere-services.com',
+        'OPTIONS': {
+        'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+    },
+  
 }
 
 
 """
-'testing': {
-    'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'ericyang24$MMDA',
-    'USER': 'ericyang24',
-    'PASSWORD': 'brim725tow418',
-    'HOST': 'ericyang24.mysql.pythonanywhere-services.com',
-    'OPTIONS': {
-        'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-    },
-}
+
 """
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
