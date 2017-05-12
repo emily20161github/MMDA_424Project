@@ -58,7 +58,14 @@
       <div class="list-group" style="margin-left: 2em">
         {% if children %} {% for dagr in children %} <a href="{% url 'details' dagr.GUID %}">
         <ul>
-          <li class="list-group-item">Name : {{ dagr.file_name }}</li>
+          <li class="list-group-item">Name : {% if dagr.file_name %}
+                {{ dagr.file_name }}
+                
+                {% elif dagr.annotated_name %}
+                {{ dagr.annotated_name }}
+                {% else %}
+                {{ dagr.GUID }}
+                {% endif %}</li>
           <li style="list-style: none">
           </li>
         </ul></a>

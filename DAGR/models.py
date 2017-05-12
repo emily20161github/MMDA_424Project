@@ -6,12 +6,12 @@ from django.db import models
 
 class DAGR(models.Model):
 	GUID = models.CharField(max_length = 200, primary_key=True)
-	size = models.BigIntegerField(blank=True) # blank=true for tweets and websites
-	file_name = models.CharField(max_length=200, blank=True)
+	size = models.BigIntegerField(null= True, blank=True) # blank=true for tweets and websites
+	file_name = models.CharField(max_length=200, null= True, blank=True)
 	annotated_name = models.CharField(max_length=200)
 	creation_date = models.DateTimeField()
-	local_path = models.CharField(max_length=200, blank=True)
-	datatype = models.CharField(max_length=200, blank=True)
+	local_path = models.CharField(max_length=200,null= True, blank=True)
+	datatype = models.CharField(max_length=200,null= True, blank=True)
 
 	def __str__(self):
 		return self.GUID

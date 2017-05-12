@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, SoupStrainer
 import urllib2
 
 from DAGR.models import *
@@ -104,10 +104,67 @@ def meta(request):
 
         return HttpResponse(json.dumps(data), content_type='application/json')
     return HttpResponse("not a post request")
+def getlinks(f):
+    links = []
+    soup2 = BeautifulSoup(f, parseOnlyThese=SoupStrainer('a', href=True))
+    for link in soup2.find_all('a'):
+        link = link['href']
+        if 'http' in link:
+            links.append(link)
+    return links
+
 
 def add_website(request):
     if request.method == 'POST':
-        return HttpResponse('working')
+        if "a_name" in request.POST and request.POST['a_name'] != "":
+            try:
+                f = urllib2.urlopen(request.POST['url']) 
+
+                f1 = urllib2.urlopen(request.POST['url'])                
+            except:
+                return render(request, 'DAGR/addweb.html', {'err' : 'URL does not link to valid website'})
+            guid = get_GUID()
+            creation_date = datetime.now()
+            datatype = "website"
+            a_name = request.POST['a_name']
+
+            links = getlinks(f1)
+
+            dagr = DAGR.objects.create(GUID=guid, 
+                annotated_name=a_name,
+                creation_date=creation_date,
+                datatype=datatype)
+
+            soup = BeautifulSoup(f)
+            webpage = Webpage.objects.create(GUID=dagr, url=request.POST['url'], title=soup.title.string)
+            
+            for link in links:
+                try:
+                    f = urllib2.urlopen(link) 
+                    soup = BeautifulSoup(f)
+                except:
+                    continue
+                nguid = get_GUID()
+                an_name = link
+
+                if soup.title and soup.title.string:
+                    an_name = soup.title.string
+
+                child = DAGR.objects.create(GUID=nguid, 
+                    annotated_name=an_name,
+                    creation_date=creation_date,
+                    datatype=datatype)
+
+                Webpage.objects.create(GUID=child, url=link, title=an_name)
+                Relationship.objects.create(parent_GUID = dagr, child_GUID = child)
+            
+
+            return redirect('details', GUID=guid)
+
+        else:
+            return render(request, 'DAGR/addweb.html', {'err' : 'No Annotated Name Provided'})
+
+
     return render(request, 'DAGR/addweb.html', {})
 
 def details(request, GUID):
@@ -336,7 +393,7 @@ def edit(request, GUID):
     }
     return render(request, 'DAGR/edit.html', context)
 
-
+"""
 def twitter(request):
     # If the form was submitted
     if request.method == "POST":
@@ -401,12 +458,12 @@ def twitter(request):
             context = {
                 "success" : str(len(tweet_list))+" "+"Tweets Have Been Added",
             }
-            return render(request, 'DAGR/home.html', context)
+            return render(request, 'DAGR/base.html', context)
 
 
     context = {}
-    return render(request, 'DAGR/home.html', context)
-
+    return render(request, 'DAGR/base.html', context)
+"""
 def get_GUID():
 	response = urllib2.urlopen('http://setgetgo.com/guid/get.php')
 	return response.read()[1:-1]

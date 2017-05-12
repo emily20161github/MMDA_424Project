@@ -16,14 +16,28 @@
       {% if parents %}
         {% for dagr in parents %}
           <tr>
-            <td>{{ dagr.file_name }} </td> <td> {{ dagr.GUID }}</td>  <td> Parent</td>
+            <td>{% if dagr.file_name %}
+                {{ dagr.file_name }}
+                
+                {% elif dagr.annotated_name %}
+                {{ dagr.annotated_name }}
+                {% else %}
+                {{ dagr.GUID }}
+                {% endif %}</td> <td> {{ dagr.GUID }}</td>  <td> Parent</td>
           </tr>
         {% endfor %}
       {% endif %}
       {% if children %}
         {% for dagr in children %}
           <tr>
-            <td>{{ dagr.file_name }} </td> <td> {{ dagr.GUID }}</td>  <td> Child</td>
+            <td>{% if dagr.file_name %}
+                {{ dagr.file_name }}
+                
+                {% elif dagr.annotated_name %}
+                {{ dagr.annotated_name }}
+                {% else %}
+                {{ dagr.GUID }}
+                {% endif %} </td> <td> {{ dagr.GUID }}</td>  <td> Child</td>
           </tr>
         {% endfor %}
       {% endif %}

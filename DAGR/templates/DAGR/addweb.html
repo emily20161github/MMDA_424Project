@@ -5,26 +5,45 @@
 
 <!--main part-->
 
-
+<div class="page-header">
+    <h1> Add a Website by submitting a website URL</h1>
+    {% if err %}
+        <font color="FF0000"> {{ err }} </font>
+    {% endif %}
+</div>
 
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
             <div class="input-group">
                 <div class="input-group-btn">
-                    <div class="btn" form="queryform" name="type">
+                    <div class="btn">
                         <option value="keyword">
-                          Website URL
+                          Website Url
                         </option>
 
                     </div>
                 </div>
                 <form id="queryform" method="post" name="queryform">
                   {% csrf_token %} 
-                  <input aria-label="..." class="form-control" form="queryform" name="guid" type="text">
-                </form>
-            </div>
+                  <input  class="form-control" name="url" type="text"> 
 
+            </div>
+            <br>
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <div class="btn">
+                        <option value="keyword">
+                          Annotated Name
+                        </option>
+
+                    </div>
+
+                </div>
+                <input  class="form-control" form="queryform" name="a_name" type="text" value="" > 
+
+            </div>
+            </form>
             <p style="text-align: right; margin-top: 20px;">
                 <input class="btn btn-primary" form="queryform" id="search" type="submit">
             </p>

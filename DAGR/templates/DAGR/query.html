@@ -77,7 +77,16 @@
             <tbody>
             {% for dagr in result %}
               <tr>
-                <th scope="row"><a href=" {% url 'details' dagr.GUID %} ">{{ dagr.file_name }}</a>
+                <th scope="row"><a href=" {% url 'details' dagr.GUID %} ">
+                {% if dagr.file_name %}
+                {{ dagr.file_name }}
+                
+                {% elif dagr.annotated_name %}
+                {{ dagr.annotated_name }}
+                {% else %}
+                {{ dagr.GUID }}
+                {% endif %}
+                </a>
                 </th>
               </tr>
                {% endfor %}
