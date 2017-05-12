@@ -127,7 +127,7 @@ def file_metadata(directory, name, a_name, keywords):
 			metadata['a_name'] = a_name
 			metadata['keywords'] = []
 			if keywords != '-nk':
-				metadata['keywords'] = keywords.split(';')
+				metadata['keywords'] = keywords.split(':')
 			else:
 			
 				metadata['keywords'] = []
@@ -167,6 +167,7 @@ FILE_EXTS = {
 HachoirConfig.quiet = True
 
 args = sys.argv
+print args
 last_arg = args.pop()
 keywords = args.pop()
 annotated_name = args.pop()
@@ -175,6 +176,8 @@ metadata = {
 	'data' : []
 }
 if last_arg == "--bulk":
+	print keywords
+	print annotated_name
 	directory = args[1]
 	onlyfiles = [f for f in listdir(directory) if isfile(join(directory, f))]
 	for f in onlyfiles:
@@ -185,7 +188,6 @@ if last_arg == "--bulk":
 elif last_arg == "--single":
 	file_name = args[1]
 	metadata['data'] = [file_metadata(file_name, file_name, annotated_name, keywords)]
-	http://cmsc424.pythonanywhere.com/use_twitter/
 d = json.dumps(metadata, ensure_ascii=False, default=datetime_handler)
 print d
 url = 'http://127.0.0.1:8000/add_metadata'

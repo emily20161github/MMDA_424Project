@@ -11,10 +11,10 @@ urlpatterns = [
     url(r'^query$', views.query, name='query'),
     url(r'^orphan$', views.orphan, name='orphan'),
     url(r'^sterile$', views.sterile, name='sterile'),
-    url(r'^reach$', views.reach, name='reach'),
+    url(r'^reach/$', views.reach, name='reach'),
     url(r'^time$', views.time, name='time'),
-    url(r'^category$', views.category, name='category'),
     url(r'^details/(?P<GUID>.+)$', views.details, name='details'),
+    url(r'^delete/(?P<GUID>.+)$', views.delete, name='delete'),
 
 
 ]

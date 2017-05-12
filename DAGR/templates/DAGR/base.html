@@ -35,23 +35,20 @@
            <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-plus"></span>Add</a>
               <ul class="dropdown-menu">
-                 <li><a href="{% url 'add_website' %}"><span class="glyphicon glyphicon-print">Webpage</a></li>
+                 <li><a href="{% url 'add_website' %}"><span class="glyphicon glyphicon-print"> Webpage</a></li>
               </ul>
           </li>
 
-           <li><a href="{% url 'query' %}"><span class="glyphicon glyphicon-search"></span>Query</a></li>
-
-          <li><a href="{% url 'category' %}"><span class="glyphicon glyphicon-pencil"></span>Category</a></li>
-
+           <li><a href="{% url 'query' %}"><span class="glyphicon glyphicon-search"></span> Query</a></li>
 
         <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-list-alt"></span>Report<span class="caret"></span></a>
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-list-alt"></span> Report<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li value="orphan"><a href="{% url 'orphan' %}"><span class="glyphicon glyphicon-print"></span>Orphan Report</a></li>
-                <li value="sterile"><a href="{% url 'sterile' %}"><span class="glyphicon glyphicon-print"></span>Sterile Report</a></li>
+                <li value="orphan"><a href="{% url 'orphan' %}"><span class="glyphicon glyphicon-list-alt"></span> Orphan Report</a></li>
+                <li value="sterile"><a href="{% url 'sterile' %}"><span class="glyphicon glyphicon-list-alt"></span> Sterile Report</a></li>
                 <li role="separator" class="divider"></li>
-                <li value="reach"><a href="{% url 'reach' %}"><span class="glyphicon glyphicon-search"></span>Reach Report</a></li>
-                <li><a href="{% url 'time' %}"><span class="glyphicon glyphicon-search"></span>Time Report</a></li>
+                <li value="reach"><a href="{% url 'reach' %}"><span class="glyphicon glyphicon-search"></span> Reach Report</a></li>
+                <li><a href="{% url 'time' %}"><span class="glyphicon glyphicon-search"></span> Time Report</a></li>
               </ul>
           </li>
     </ul>

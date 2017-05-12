@@ -1,76 +1,39 @@
 {% extends 'DAGR/base.html' %}
 
 {% block content %}
+  <div class="panel panel-default">
+    <div class="panel-heading"> <h2>Deleting this DAGR will affect the following DAGRS</h2></div>
 
-
-<div class="container">
-  <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Delete</button>
-
-  <div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-body">
-          Are you sure?
-        </div>
-        <div class="modal-footer">
-          <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
-          <button type="button" data-dismiss="modal" class="btn">Cancel</button>
-        </div>
+    <div class="panel-body">
+      <form method="post"> 
+        {% csrf_token %}
+        <input type="submit" class="btn btn-primary btn-md" style="margin-bottom: 2em" value="Confirm Delete"/> 
+      
+      </form>
+      <div class="list-group" style="margin-left: 2em">
+      <table class="table">
+      <tr> <th> Name </th> <th> GUID </th> <th> Parent/Child </th></tr>
+      {% if parents %}
+        {% for dagr in parents %}
+          <tr>
+            <td>{{ dagr.file_name }} </td> <td> {{ dagr.GUID }}</td>  <td> Parent</td>
+          </tr>
+        {% endfor %}
+      {% endif %}
+      {% if children %}
+        {% for dagr in children %}
+          <tr>
+            <td>{{ dagr.file_name }} </td> <td> {{ dagr.GUID }}</td>  <td> Child</td>
+          </tr>
+        {% endfor %}
+      {% endif %}
+      </table>
       </div>
+
     </div>
+
+
   </div>
-
-  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModa">Update</button>
-
-  <div id="myModa" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div class="row">
-              <div class="col-md-12">
-                <div class="panel panel-default">
-                  <div class="panel-body">                 
-                    <lable><b>Please select file that you want to replace the original file in database</b></lable>
-                    <br>
-                    <br>
-                    <form method="post" enctype="multipart/form-data">
-                      <input type="file" id="files" name="files" multiple="multiple" />
-                    </form>
-                  </div>
-                </div>        
-              </div>  
-            </div>
-        </div>
-         <div class="modal-footer">
-          <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Submit</button>
-          <button type="button" data-dismiss="modal" class="btn">Cancel</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-<!--<script type="text/javascript">
-  $(document).ready(function(){
-    $('.modal').modal('show');
-});
-</script>
-
-<script type="text/javascript">
-  $('button[name="remove_levels"]').on('click', function(e) {
-  var $form = $(this).closest('form');
-  e.preventDefault();
-  $('#confirm').modal({
-      backdrop: 'static',
-      keyboard: false
-    })
-  .one('click', '#delete', function(e) {
-      $form.trigger('submit');
-    });
-});
-</script>-->
-
 
 {% endblock %}
 

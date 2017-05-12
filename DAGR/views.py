@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
@@ -140,10 +140,23 @@ def details(request, GUID):
     context = {
         'objects': objects,
         'children' : children,
-        'parents' : parents
+        'parents' : parents,
+        'dagr' : dagr
 
     }
     return render(request, 'DAGR/detail.html', context)
+
+def time(request):
+    if request.method =="POST":
+        start_date = request.POST['start']
+        end_date = request.POST['end']
+        if start_date and end_date:
+            qs = DAGR.objects.filter(creation_date__range=(start_date, end_date))
+            return render(request, 'DAGR/time.html', {'result' : qs})
+        else:
+            return render(request, "DAGR/time.html", {'error' : "Invalid search input"})
+
+    return render(request, 'DAGR/time.html', {})
 
 def test(request):
     if request.method == "POST":
@@ -237,75 +250,53 @@ def query(request):
 
 
 def orphan(request):
-    input=request.GET['orphan']
-    try:
-        orphanfile=Relationship.objects.select_related('parent_GUID__GUID').extra(
+    qs = DAGR.objects.all()
+    orphans = []
+    for q in qs:
+        if Relationship.objects.filter(child_GUID=q).count()==0:
+            orphans.append(q)
 
-            select={'filename':"DAGR.file_name",},
-            #select={'filename':"select DAGR.file_name from DAGR left outer join Relationship on DAGR.GUID=Relationship.parent_GUID where parent_GUID is null"},
-            where=['Relationship.parent_GUID IS NULL']
-
-            )
-    except DAGR.DoesNotExist:
-        raise Http404
-    return render(request, 'DAGR/orphan.html', {'orphanfile' : orphanfile})
+    return render(request, 'DAGR/orphan.html', {'results' : orphan})
     
 
 def sterile(request):
-    input=request.GET(sterile)
-    try:
-        orphanfile=Relationship.objects.select_related('child_GUID__GUID').extra(
+    qs = DAGR.objects.all()
+    sterile = []
+    for q in qs:
+        if Relationship.objects.filter(child_GUID=q).count()==0:
+            sterile.append(q)
 
-            select={'filename':"DAGR.file_name",},##need more code
-            #select={'filename':"select DAGR.file_name from DAGR left outer join Relationship on DAGR.GUID=Relationship.parent_GUID where parent_GUID is null"},
-            where=['Relationship.child_GUID IS NULL']
-
-            )
-    except DAGR.DoesNotExist:
-        raise Http404
-    return render(request, 'DAGR/sterile.html', {'sterilefile' : sterilefile})
+    return render(request, 'DAGR/sterile.html', {'results' : sterile})
 
 
 def reach(request):
-    return render(request, 'DAGR/Reach_Report.html', {})
+    if request.method == "POST":
+        guid = request.POST['guid']
+        if DAGR.objects.filter(GUID = guid).count() == 0:
+            msg = "No DAGR with GUID: " + guid 
+            return render(request, 'DAGR/reach.html', {"error" : msg})
+        else:
+            dagr = DAGR.objects.get(GUID=guid)
+
+            context = get_reach(dagr)
+            return render(request, "DAGR/reach.html", context)
 
 
-def time(request):
-    start_time=request.GET('start')
-    end_time = request.GET('end')
-    if start_time and end_time:
-        timefile=DAGR.objects.extra(
-            select={'filename':"DAGR.file_name",},##need code to not get specific thing or several attributes
-            where=['DAGR.creation_date > start_time and DAGR.creation_date < end_time']##probably cant do like this. need multiple select.
-            )
-    return render(request, 'DAGR/time.html', {'timefile':timefile})
+
+    return render(request, 'DAGR/reach.html', {})
 
 
-def delete(request):
-    input=request.GET('delete')
-    if input:
-        found= DAGR.objects.get(GUID=str(file.GUID))
-        found.delete()
-    
 
-
-def cancel(request):
-    input=request.Get('cancel')
-    url = self.get_success_url()
-    return HttpResponseRedirect(url)
-
-
-def update(request): ###need code
-    input = request.GET('add')
-    if input:
-        try:
-            file1 = DAGR.objects.get(GUID=str(file.GUID))
-            file1.is_active = False
-            file1.save()
-        except DAGR.DoesNotExist:
-            pass
-
-
+def delete(request, GUID):
+    if request.method == "POST" and GUID:
+        dagr = DAGR.objects.get(GUID=GUID)
+        dagr.delete()
+        context = {
+            "msg" : "DAGR Successfully Deleted"
+        }
+        return redirect('query')
+    context = get_reach(DAGR.objects.get(GUID=GUID))
+    return render(request, 'DAGR/delete.html', context)
 
 def twitter(request):
     # If the form was submitted
@@ -388,118 +379,13 @@ def oauth_req(url, key, secret):
         resp, content = client.request(url)
         return content
 
-
-def type(input):
-    return DAGR.objects.filter(file_type=str(input))
-    
-
-def size(input):
-    return DAGR.objects.filter(size=str(input))
-
-def file_name(input):
-    return DAGR.objects.filter(file_name_contains='str(input)')
-
-def key_word(input):
-    return DAGR.objects.filter(Keyword_keyword_contains='str(input)')
-
-
-def date(input):
-    return DAGR.objects.filter(date='str(input)').value
-
-
-def selection(request,selection,input):
-
-    switcher = {
-        0: key_word,
-        1: file_name,
-        2: date,
-        3: size,
-        4: type,
-    }
-    try:
-        result= switcher
-    except DAGR.DoesNotExist:
-        raise Http404
-    return render(request, 'query.html', {'result' : result})
-
-
-def orphan_Report(request):
-
-    try:
-        orphan_data=Relationship.objects.select_related('parent_GUID__GUID').extra(
-
-            select={'filename':"DAGR.file_name",},
-            #select={'filename':"select DAGR.file_name from DAGR left outer join Relationship on DAGR.GUID=Relationship.parent_GUID where parent_GUID is null"},
-            where=['Relationship.parent_GUID IS NULL']
-
-            )
-    except DAGR.DoesNotExist:
-        raise Http404
-    return render(request, 'query.html', {'orphan_data' : orphan_data})
-    
-
-def update(input):
-
-    try:
-        file = DAGR.objects.get(GUID='input')
-        file.is_active = False
-        file.save()
-
-    except DAGR.DoesNotExist:
-        pass    
-
-
-def delete(input):
-    try:
-        file= DAGR.objects.get(GUID=str(input))
-        file.delete()
-    except DAGR.DoesNotExist:
-        pass
-
-
-"""
-These 4 will require Hachoir/other parsing methods to get metadata
-
-
-def create_Image(GUID):
-	new_Image = Image.objects.create(
-		GUID= GUID,
-		image_width = 0 , #change to whatever hachoir extracts
-		image_height = 0,
-		)
-
-def create_Video(GUID):
-	new_Video = Video.objects.create(
-		GUID= GUID,
-		video_width = 0 , #change to whatever hachoir extracts
-		video_height = 0,
-		)
-
-def create_Audio(GUID):
-	new_Audio = Audio.objects.create(
-		GUID = GUID,
-		title = "",
-		artist = "",
-		year = 0,
-		composer = "".
-		track = 0,
-		album = "",
-	)
-
-def create_Word_Document(GUID):
-	new_Doc = Word_Document.objects.create(
-		GUID = GUID,
-		page_count = 0,
-		word_count = 0,
-		paragraph_count = 0,
-		author = "",
-		date_modified = datetime.datetime.now()
-	)
-
-"""
-
-"""
-def create_Webpage(GUID):
-
-
-"""
+def get_reach(dagr):
+    children = []
+    qs = Relationship.objects.filter(parent_GUID = dagr)
+    for q in qs:
+        children.append(q.child_GUID)
+    parents = []
+    qs = Relationship.objects.filter(child_GUID = dagr)
+    for q in qs:
+        parents.append(q.parent_GUID)
+    return {'children' : children,'parents' : parents,'guid' : dagr.GUID}

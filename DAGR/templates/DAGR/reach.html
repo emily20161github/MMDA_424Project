@@ -1,136 +1,80 @@
-{% extends 'DAGR/base.html' %}
 
-{% block content %}
-
-
-
-<!--##########################################main part###########################################################-->
-<!--title-->
-<div class="container">
+  {% extends 'DAGR/base.html' %} {% block content %}
+  <div class="container">
     <div class="page-header">
-  <h1> Reach Report<small></small></h1>
-</div>
-
-
-<!--panel for search-->
-<div class="panel panel-default">
-<div class="panel-heading"><p>Please input the DAGR that you want to find report</p>
-  <div class="panel-body">
-
-
-        <input type="text" class="form-control" aria-label="...">
-
-    <p style="text-align: right; margin-top: 20px;">
-      <button type="submit" class="btn btn-primary" id="search">Search</button>
-      <button type="submit" class="btn btn-primary" id="cancel">Cancel</button>
-    </p>
-  </div>
-</div>
-  </div>
-
-
-
-
-  <!--panel for table result-->
-			
-<div class="panel panel-success">
-  <!-- Default panel contents -->
-  <div class="panel-heading"><b>These are the files that you are looking for:</b></div>
-					<table class="table table-striped">
-					  <thead class="thead-default">
-					    <tr>
-					      <th>File Name</th>
-					      <th>File GUID</th>
-					      <th>File Type</th>
-					      <th>Parent DAGR</th>
-					      <th>children DAGR</th>
-					      <th>Operation</th>
-					    </tr>
-					  </thead>
-					  <tbody>
-					  {% for file in all_files %}
-					    <tr>
-					      <th scope="row"><a href=" {% url 'MMDA:details' File.GUID %} ">{{ File.file_name }}</a>
-					      </th>
-					      <td>file.GUID</td>
-					      <td>file.Type</td>
-					      <td>file.parent</td>
-					      <td>file.children</td>
-					      <td>
-
-		              	<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Delete</button>
-		              	<div id="myModal" class="modal fade" role="dialog">
-			                	<div class="modal-dialog">
-			                  		<div class="modal-content">
-				                    	<div class="modal-body">
-				                      Are you sure?
-				                    	</div>
-				                    	<div class="modal-footer">
-				                      		<button name="delete" type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
-				                      		<button name = "cancel" type="button" data-dismiss="modal" class="btn">Cancel</button>
-				                    	</div>
-				                	</div>
-				                </div>
-				        </div>
-				        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModa">Update</button>
-
-                    <div id="myModa" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-body">
-                                  <div class="row">
-                                    <div class="panel panel-default">
-                                      <div class="panel-body">                 
-                                        <lable><b>Please select file that you want to replace the original file in database</b></lable>
-                                        <br>
-                                        <br>
-                                        <form method="post" enctype="multipart/form-data">
-                                          <input type="file" id="files" name="files" multiple="multiple" />
-                                        </form>
-                                        <div class="form-group">
-                                        <br>
-                                          <label for="usr">Or</label>
-                                          <br>
-                                          <label for="usr"> input the website</label>
-                                          <input type="text" class="form-control" id="usr">
-                                        </div>
-                                      </div>
-                                    </div>        
-                                  </div>  
-                                </div>
-                            </div>
-                             <div class="modal-footer">
-                               <button name="add" type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Submit</button>
-                              <button name="cancel" type="button" data-dismiss="modal" class="btn">Cancel</button>
-                            </div>
-                        </div>
-                      </div>
-                    </div>
-		             	</td>
-					    </tr>
-					   {% endfor %}
-            </tbody>
-
-          </table>
-
-         {% endif %}   
+      <h1>Reach Report</h1>
+      {% if error %}
+        <h2 > <font color="FF0000">{{ error }} </font></h2>
+      {% endif %}
+    </div><!--panel for search-->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Please input DAGR GUID</h3>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <div class="btn" form="queryform" name="type">
+                    <option value="keyword">
+                      Reach Query
+                    </option>
+                    
+                  </div>
+                </div>
+                <form id="queryform" method="post" name="queryform">
+                  {% csrf_token %} <input aria-label="..." class="form-control" form="queryform" name="guid" type="text">
+                </form>
+              </div>
+            </div>
           </div>
-				</div>
-			</div>
-
-      	</div>
+          <p style="text-align: right; margin-top: 20px;"><input class="btn btn-primary" form="queryform" id="search" type="submit"></p>
+        </div>
+      </div>
+    </div><!--panel for table result-->
+    <div class="panel panel-success">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        <b> Reach Report for {{ dagr }} </b>
+      </div>
+      <div class="panel-heading">
+        <b>Parent DAGRS </b>
+      </div>
+      <div class="panel-body">
+      <div class="list-group" style="margin-left: 2em">
+        {% if parents %} {% for dagr in parents %} <a href="{% url 'details' dagr.GUID %}">
+        <ul>
+          <li class="list-group-item">Name : {{ dagr.file_name }}</li>
+          <li style="list-style: none">
+          </li>
+        </ul></a>
+        {% endfor %} {% else %}
+            <h3>No Parent DAGRs</h3>{% endif %}
+      </div>
     </div>
+    <div class="panel-heading">
+      <b>Child DAGRS</b>
+    </div>
+    <div class="panel-body">
+      <div class="list-group" style="margin-left: 2em">
+        {% if children %} {% for dagr in children %} <a href="{% url 'details' dagr.GUID %}">
+        <ul>
+          <li class="list-group-item">Name : {{ dagr.file_name }}</li>
+          <li style="list-style: none">
+          </li>
+        </ul></a>
+        {% endfor %} {% else %}
+            <h3>No Child DAGRs</h3>{% endif %}
+      </div>
+    </div>
+    </div>
+  </div>
+  <script type="text/javascript">
 
-    
 
-<script type="text/javascript">
-
-$('#Search').click(function()
-{   
+  $('#Search').click(function()
+  {   
     $("#panel4").toggle();     
-});
+  });
 
-</script>
-{% endblock %}
-
-
+  </script> {% endblock %}

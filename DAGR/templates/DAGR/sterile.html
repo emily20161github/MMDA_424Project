@@ -2,110 +2,45 @@
 
 {% block content %}
 
-<!--##########################################Main part###########################################################-->
+<!--main part-->
 
-
-
-
-<!--title-->
-<div class="container">
+  <div class="container">
     <div class="page-header">
-  <h1>Sterile Report <small></small></h1>
-</div>
-   
+      <h1>Sterile Report</h1>
+    </div>
 
-
-
-
-<!--table result fo rsterile-->   
-<div class="panel panel-success">
+    <div class="panel panel-success" id="panel3">
   <!-- Default panel contents -->
-  <div class="panel-heading"><b>These are the files that you are looking for:</b></div>
-  {% if sterilefile %}
-                    <table class="table table-striped">
-                      <thead class="thead-default">
-                        <tr>
-                          <th>File Name</th>
-                          <th>File GUID</th>
-                          <th>File Type</th>
-                          <th>Local Path</th>
-                          <th>annotated_name</th>
-                          <th>Operation</th>
-                        </tr>
-                 
-                      </thead>
+  <div class="panel-heading"><b>These are the Sterile DAGRs:</b></div>
+      <div class="panel-body">
+        <ul>
+          {% if result %}
+          <table class="table">
+            <thead class="thead-default">
+              <tr>
+                <th>File Name</th>
 
-                      <tbody>
-                       {% for file in sterilefile %}
-                        <tr>
-                          <th scope="row"><a href=" {% url 'detail' %} ">{{ file.file_name }}</a>
-                          </th>
-                          <td>file.GUID</td>
-                          <td>file.type</td>
-                          <td>file.localpath</td>
-                          <td>file.annotated_name</td>
-                          <td>
-
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Delete</button>
-                        <div id="myModal" class="modal fade" role="dialog">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-body">
-                                      Are you sure?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button name="delete"  type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
-                                            <button name = "cancel"type="button" data-dismiss="modal" class="btn">Cancel</button>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModa">Update</button>
-
-                    <div id="myModa" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-body">
-                                  <div class="row">
-                                    <div class="panel panel-default">
-                                      <div class="panel-body">                 
-                                        <lable><b>Please select file that you want to replace the original file in database</b></lable>
-                                        <br>
-                                        <br>
-                                        <form method="post" enctype="multipart/form-data">
-                                          <input type="file" id="files" name="files" multiple="multiple" />
-                                        </form>
-                                        <div class="form-group">
-                                        <br>
-                                          <label for="usr">Or</label>
-                                          <br>
-                                          <label for="usr"> input the website</label>
-                                          <input type="text" class="form-control" id="usr">
-                                        </div>
-                                      </div>
-                                    </div>        
-                                  </div>  
-                                </div>
-                            </div>
-                             <div class="modal-footer">
-                             <button name="add" type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Submit</button>
-                              <button name="cancel" type="button" data-dismiss="modal" class="btn">Cancel</button>
-                            </div>
-                        </div>
-                      </div>
-                    </div>
-                        </td>
-                        </tr>
-                         {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+            {% for dagr in result %}
+              <tr>
+                <th scope="row"><a href=" {% url 'details' dagr.GUID %} ">{{ dagr.file_name }}</a>
+                </th>
+              </tr>
+               {% endfor %}
             </tbody>
 
           </table>
+          {% else %}
+          <h2>There are no Sterile DAGRs</h2>
+          {% endif %}    
+        </ul>
 
-         {% endif %}   
-
-                </div>
-            </div>
-
-        </div>
+      </div>
     </div>
+  </div>
+  </div>
 {% endblock %}
+
+
