@@ -298,8 +298,43 @@ def delete(request, GUID):
     return render(request, 'DAGR/delete.html', context)
 
 def edit(request, GUID):
-
-    return HttpResponse("edit")
+    dagr = DAGR.objects.get(GUID=GUID)
+    if request.method == "POST":
+        parent_err = None
+        child_err = None
+        changed = None
+        if request.POST['a_name']:
+            if dagr.annotated_name != request.POST['a_name']:
+                dagr.annotated_name = request.POST['a_name']
+                dagr.save()
+                changed = "Annotated Name Updated!"
+        if 'add_parent' in request.POST and request.POST['add_parent'] != "":
+            new_parent = DAGR.objects.filter(GUID=request.POST['add_parent']).first()
+            if new_parent:
+                Relationship.objects.create(parent_GUID=new_parent, child_GUID=dagr)
+                parent_err = "A New Parent has been added to this DAGR"
+            else:
+                parent_err = "Parent GUID is Invalid, Relationship creation failed"
+        if 'add_child' in request.POST and request.POST['add_child'] != "":
+            new_child = DAGR.objects.filter(GUID=request.POST['add_child']).first()
+            if new_child:
+                Relationship.objects.create(parent_GUID=dagr, child_GUID=new_child)
+                child_err = "A New Child has been added to this DAGR"
+            else:
+                child_err = "Child GUID is Invalid, Relationship creation failed"
+        context = {
+            'dagr' : dagr,
+            'p_err' : parent_err,
+            'c_err' : child_err,
+            'changed' : changed,
+            "a_n" : dagr.annotated_name
+        }
+        return render(request, 'DAGR/edit.html', context)
+    context = {
+        'dagr' : dagr,
+        "a_n" : dagr.annotated_name   
+    }
+    return render(request, 'DAGR/edit.html', context)
 
 
 def twitter(request):

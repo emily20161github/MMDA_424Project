@@ -5,69 +5,33 @@
 
 <!--main part-->
 
+
+
 <div class="container">
-  <div class="row">
-    <input type="hidden" name="count" value="1" />
-        <div class="control-group" id="fields">
-            <h2>Add DAGR of Website into Database</h2>
-            <div class="controls" id="profs"> 
-                <form class="input-append" name="url_form" method="post">
-                    {% csrf_token %}
-                    <div id="field"><input autocomplete="off" class="input" id="url" name="url" type="text" placeholder="enter valid url" data-items="8"/>
-                    
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <div class="btn" form="queryform" name="type">
+                        <option value="keyword">
+                          Website URL
+                        </option>
+
+                    </div>
+                </div>
+                <form id="queryform" method="post" name="queryform">
+                  {% csrf_token %} 
+                  <input aria-label="..." class="form-control" form="queryform" name="guid" type="text">
                 </form>
-            <br>
-            <p style="text-align: right; margin-top: 10px;">
-                  <input type="submit" name="url_form" value="Submit" class="btn btn-lg btn-primary btn-sm" />
-            </p>
             </div>
+
+            <p style="text-align: right; margin-top: 20px;">
+                <input class="btn btn-primary" form="queryform" id="search" type="submit">
+            </p>
         </div>
-  </div>
+    </div>
+
 </div>
 
-
-<script type="text/javascript">
-  $(document).ready(function(){
-    var next = 1;
-    $(".add-more").click(function(e){
-        e.preventDefault();
-        var addto = "#field" + next;
-        var addRemove = "#field" + (next);
-        next = next + 1;
-        var newIn = '<input autocomplete="off" class="input form-control" id="field' + next + '" name="field' + next + '" type="text">';
-        var newInput = $(newIn);
-        var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >-</button></div><div id="field">';
-        var removeButton = $(removeBtn);
-        $(addto).after(newInput);
-        $(addRemove).after(removeButton);
-        $("#field" + next).attr('data-source',$(addto).attr('data-source'));
-        $("#count").val(next);  
-        
-            $('.remove-me').click(function(e){
-                e.preventDefault();
-                var fieldNum = this.id.charAt(this.id.length-1);
-                var fieldID = "#field" + fieldNum;
-                $(this).remove();
-                $(fieldID).remove();
-            });
-    });
-    
-
-    
-});
-
-
-
-
-</script>
-<style type="text/css">
-  * {
-    .border-radius(0) !important;
-  }
-
-  #field {
-    margin-bottom:10px;
-}
-</style>
 {% endblock %}
 

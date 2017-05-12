@@ -1,6 +1,71 @@
 {% extends 'DAGR/base.html' %}
 
 {% block content %}
+<div class="page-header">
+    <h1>Editting "{{ dagr.file_name }}" <small></small></h1>
+    {% if changed %}
+      <h3> {{ changed }} </h3>
+    {% endif %}
+    {% if p_err %}
+      <h3> {{ p_err }} </h3>
+    {% endif %}
+    {% if c_err %}
+      <h3> {{ c_err }} </h3>
+    {% endif %}
+  </div>
 
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <div class="btn">
+                        <option value="keyword">
+                          Annotated Name
+                        </option>
 
+                    </div>
+                </div>
+                <form id="queryform" method="post" name="queryform">
+                  {% csrf_token %} 
+                  <input  class="form-control" name="a_name" type="text" value="{{ a_n }}" > 
+
+            </div>
+            <br>
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <div class="btn">
+                        <option value="keyword">
+                          New Parent GUID
+                        </option>
+
+                    </div>
+
+                </div>
+                <input  class="form-control" form="queryform" name="add_parent" type="text" value="" > 
+
+            </div>
+            <br>
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <div class="btn">
+                        <option value="keyword">
+                          New Child GUID
+                        </option>
+
+                    </div>
+
+                </div>
+                <input  class="form-control" form="queryform" name="add_child" type="text" value=""> 
+
+            </div>
+
+                </form>
+            <p style="text-align: right; margin-top: 20px;">
+                <input class="btn btn-primary" form="queryform" id="search" type="submit">
+            </p>
+        </div>
+    </div>
+
+</div>
 {% endblock %}

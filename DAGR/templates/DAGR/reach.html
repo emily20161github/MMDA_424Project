@@ -45,8 +45,7 @@
         {% if parents %} {% for dagr in parents %} <a href="{% url 'details' dagr.GUID %}">
         <ul>
           <li class="list-group-item">Name : {{ dagr.file_name }}</li>
-          <li style="list-style: none">
-          </li>
+          
         </ul></a>
         {% endfor %} {% else %}
             <h3>No Parent DAGRs</h3>{% endif %}
