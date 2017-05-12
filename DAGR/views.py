@@ -141,6 +141,7 @@ def details(request, GUID):
         'objects': objects,
         'children' : children,
         'parents' : parents,
+        'keywords' : keywords,
         'dagr' : dagr
 
     }
@@ -187,8 +188,6 @@ def test(request):
     context = {}
     return render(request, 'DAGR/addfile.html', context)
 
-def category(request):
-    return render(request, 'DAGR/category.html', {})
 
 def home(request):
     return render(request, 'DAGR/homepage.html', {})
@@ -256,17 +255,17 @@ def orphan(request):
         if Relationship.objects.filter(child_GUID=q).count()==0:
             orphans.append(q)
 
-    return render(request, 'DAGR/orphan.html', {'results' : orphan})
+    return render(request, 'DAGR/orphan.html', {'result' : orphans})
     
 
 def sterile(request):
     qs = DAGR.objects.all()
     sterile = []
     for q in qs:
-        if Relationship.objects.filter(child_GUID=q).count()==0:
+        if Relationship.objects.filter(parent_GUID=q).count()==0:
             sterile.append(q)
 
-    return render(request, 'DAGR/sterile.html', {'results' : sterile})
+    return render(request, 'DAGR/sterile.html', {'result' : sterile})
 
 
 def reach(request):
@@ -297,6 +296,11 @@ def delete(request, GUID):
         return redirect('query')
     context = get_reach(DAGR.objects.get(GUID=GUID))
     return render(request, 'DAGR/delete.html', context)
+
+def edit(request, GUID):
+
+    return HttpResponse("edit")
+
 
 def twitter(request):
     # If the form was submitted

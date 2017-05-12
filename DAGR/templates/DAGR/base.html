@@ -33,9 +33,10 @@
     <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-plus"></span>Add</a>
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-plus"></span> Add</a>
               <ul class="dropdown-menu">
-                 <li><a href="{% url 'add_website' %}"><span class="glyphicon glyphicon-print"> Webpage</a></li>
+                 <li><a href="{% url 'add_website' %}"><span class="glyphicon glyphicon-print"> Webpage</a>
+                 <a href="{% url 'add_website' %}"><span class="glyphicon glyphicon-globe"> Twitter</a></li>
               </ul>
           </li>
 

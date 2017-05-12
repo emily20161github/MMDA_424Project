@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^time$', views.time, name='time'),
     url(r'^details/(?P<GUID>.+)$', views.details, name='details'),
     url(r'^delete/(?P<GUID>.+)$', views.delete, name='delete'),
+    url(r'^edit/(?P<GUID>.+)$', views.edit, name='edit'),
 
 
 ]
