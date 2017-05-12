@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from bs4 import BeautifulSoup, SoupStrainer
 import urllib2
+import string
 
 from DAGR.models import *
 from .forms import UploadFileForm
@@ -44,7 +45,7 @@ def meta(request):
             for keyword in meta['keywords']:
                 if Keyword.objects.filter(keyword=keyword).count()==0:
                     new_key = Keyword(keyword=keyword)
-                    
+
                     new_key.save()
                     new_key.dagr.add(dagr)
                 else:
@@ -118,9 +119,9 @@ def add_website(request):
     if request.method == 'POST':
         if "a_name" in request.POST and request.POST['a_name'] != "":
             try:
-                f = urllib2.urlopen(request.POST['url']) 
+                f = urllib2.urlopen(request.POST['url'])
 
-                f1 = urllib2.urlopen(request.POST['url'])                
+                f1 = urllib2.urlopen(request.POST['url'])
             except:
                 return render(request, 'DAGR/addweb.html', {'err' : 'URL does not link to valid website'})
             guid = get_GUID()
@@ -130,17 +131,17 @@ def add_website(request):
 
             links = getlinks(f1)
 
-            dagr = DAGR.objects.create(GUID=guid, 
+            dagr = DAGR.objects.create(GUID=guid,
                 annotated_name=a_name,
                 creation_date=creation_date,
                 datatype=datatype)
 
             soup = BeautifulSoup(f)
             webpage = Webpage.objects.create(GUID=dagr, url=request.POST['url'], title=soup.title.string)
-            
+
             for link in links:
                 try:
-                    f = urllib2.urlopen(link) 
+                    f = urllib2.urlopen(link)
                     soup = BeautifulSoup(f)
                 except:
                     continue
@@ -149,15 +150,16 @@ def add_website(request):
 
                 if soup.title and soup.title.string:
                     an_name = soup.title.string
-
-                child = DAGR.objects.create(GUID=nguid, 
+                    printable = set(string.printable)
+                    an_name = filter(lambda x: x in printable, an_name)
+                child = DAGR.objects.create(GUID=nguid,
                     annotated_name=an_name,
                     creation_date=creation_date,
                     datatype=datatype)
 
                 Webpage.objects.create(GUID=child, url=link, title=an_name)
                 Relationship.objects.create(parent_GUID = dagr, child_GUID = child)
-            
+
 
             return redirect('details', GUID=guid)
 
@@ -170,7 +172,7 @@ def add_website(request):
 def details(request, GUID):
     objects = []
 
-    dagr = DAGR.objects.get(GUID=GUID) 
+    dagr = DAGR.objects.get(GUID=GUID)
     web = (Webpage.objects.filter(GUID=dagr).first())
     img =(Image.objects.filter(GUID=dagr).first())
     vid = (Video.objects.filter(GUID=dagr).first())
@@ -180,9 +182,9 @@ def details(request, GUID):
     objects.extend([dagr, web, img, vid, audio, tweet, doc])
     for obj in objects:
         if obj:
-            obj.fields = dict(((field.name).upper, field.value_to_string(obj)) 
+            obj.fields = dict(((field.name).upper, field.value_to_string(obj))
                     for field in obj._meta.fields if not field.primary_key)
-    
+
 
     keywords = dagr.keyword_set.all()
     children = []
@@ -221,7 +223,7 @@ def test(request):
         if request.FILES and request.POST:
             a = []
             for file in request.FILES["files"]:
-                
+
                 a.append([type(file).__name__])
 
             if request.POST["annotated_name"] and request.POST['keywords']:
@@ -259,7 +261,7 @@ def query(request):
                 return render(request, 'DAGR/query.html', {'error' : 'No DAGRs With Keyword ' + k +' Found'})
             else:
                 keyword = Keyword.objects.get(keyword=k)
-                dagrs = keyword.dagr.all()  
+                dagrs = keyword.dagr.all()
                 return render(request, 'DAGR/query.html', {'error' : 'success', 'result':dagrs})
 
         elif request.POST['type'] == 'aname':
@@ -292,7 +294,7 @@ def query(request):
                     return render(request, 'DAGR/query.html', {'error' : 'success', 'result':qs})
 
 
-        elif request.POST['type'] == 'type':   
+        elif request.POST['type'] == 'type':
             k = request.POST['params']
             qs = DAGR.objects.filter(datatype__contains=k)
             if qs.count() == 0:
@@ -313,7 +315,7 @@ def orphan(request):
             orphans.append(q)
 
     return render(request, 'DAGR/orphan.html', {'result' : orphans})
-    
+
 
 def sterile(request):
     qs = DAGR.objects.all()
@@ -329,7 +331,7 @@ def reach(request):
     if request.method == "POST":
         guid = request.POST['guid']
         if DAGR.objects.filter(GUID = guid).count() == 0:
-            msg = "No DAGR with GUID: " + guid 
+            msg = "No DAGR with GUID: " + guid
             return render(request, 'DAGR/reach.html', {"error" : msg})
         else:
             dagr = DAGR.objects.get(GUID=guid)
@@ -389,7 +391,7 @@ def edit(request, GUID):
         return render(request, 'DAGR/edit.html', context)
     context = {
         'dagr' : dagr,
-        "a_n" : dagr.annotated_name   
+        "a_n" : dagr.annotated_name
     }
     return render(request, 'DAGR/edit.html', context)
 

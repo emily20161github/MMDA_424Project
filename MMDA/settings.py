@@ -25,8 +25,7 @@ SECRET_KEY = 'n-0y-pxl5xon#iiy#ipb$20vy715%9(l@7bsfwb5ys)tu^icxu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [u'ericyang24.pythonanywhere.com',u'127.0.0.1'
-
+ALLOWED_HOSTS = [u'ericyang24.pythonanywhere.com'
 ]
 
 CONSUMER_KEY = '37mmtGyeM5lolI1UGqqB2LZDu'
@@ -90,14 +89,10 @@ DATABASES = {
         'HOST': 'ericyang24.mysql.pythonanywhere-services.com',
         'OPTIONS': {
         'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-    },
-  
+        }
+    }
 }
 
-
-"""
-
-"""
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 
